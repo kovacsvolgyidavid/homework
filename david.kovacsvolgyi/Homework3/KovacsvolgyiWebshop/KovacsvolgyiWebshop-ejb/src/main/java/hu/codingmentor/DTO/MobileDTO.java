@@ -7,12 +7,14 @@ package hu.codingmentor.DTO;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  *
  * @author keni
  */
 public class MobileDTO {
+    @Pattern(regexp="[a-z0-9]{36}")
     String id;
     @NotNull
     String type;
@@ -22,7 +24,22 @@ public class MobileDTO {
     int price;
     @Min(0)
     int piece;
+   public MobileDTO(String id, String type, String manufacturer, int price, int piece) {
+        
+        this.id = id;
+        this.type = type;
+        this.manufacturer = manufacturer;
+        this.price = price;
+        this.piece = piece;
+    }
+    public MobileDTO() {
+    }
 
+ 
+
+   
+    
+    
     public String getId() {
         return id;
     }

@@ -22,7 +22,7 @@ public class UserDTO {
     @Pattern(regexp="....*")
     @NotNull
     String username;
-    @Pattern(regexp="BAD PATTERN")//TODO: pattern megszerkeszteni amit a feladat ír
+    @Pattern(regexp="(?=.*[0-9=+<>.,])(?=.*[a-z])(?=.*[A-Z]).{6,}$")
     String password;
     String firstname;
     String lastname;
