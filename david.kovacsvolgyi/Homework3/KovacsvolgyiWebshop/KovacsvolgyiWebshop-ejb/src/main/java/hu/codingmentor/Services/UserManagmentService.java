@@ -7,7 +7,9 @@ package hu.codingmentor.Services;
 
 import hu.codingmentor.DTO.UserDTO;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -67,7 +69,21 @@ public class UserManagmentService {
     }
 
     public UserDTO getUser(String username) {
+       if(!users.containsKey(username)){
+       throw new IllegalArgumentException("There is no user with this name");
+       }
         return users.get(username);
+             
     }
+
+    public List<UserDTO> getUsers() {
+       List <UserDTO>usersRET=new ArrayList<>();
+        for(String username:users.keySet()){
+       usersRET.add(users.get(username));
+       
+       }
+        return usersRET;
+    }
+    
 
 }

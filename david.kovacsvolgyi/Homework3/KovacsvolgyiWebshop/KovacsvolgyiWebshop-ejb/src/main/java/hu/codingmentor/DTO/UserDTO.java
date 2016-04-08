@@ -108,6 +108,10 @@ public class UserDTO {
     public void setCart(List<MobileDTO> cart) {
         this.cart = cart;
     }
+
+    public void deleteCart() {
+        this.cart.removeAll(cart);
+    }
     
     
 }
