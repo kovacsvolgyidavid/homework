@@ -14,7 +14,7 @@ import javax.validation.Payload;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Constraint(validatedBy = OldEnoughValidator.class)
 @Target({ElementType.FIELD})

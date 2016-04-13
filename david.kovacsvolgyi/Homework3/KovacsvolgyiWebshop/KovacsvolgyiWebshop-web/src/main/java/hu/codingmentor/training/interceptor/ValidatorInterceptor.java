@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.interceptor;
+package hu.codingmentor.training.interceptor;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -9,13 +9,13 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import xyz.codingmentor.Exception.ValidationException;
+import hu.codingmentor.Exception.ValidationException;
 import xyz.codingmentor.training.annotation.Validate;
 
 
 /**
  *
- * @author Denes Laszlo <denes.laszlo.88@gmail.com>
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Interceptor
 public class ValidatorInterceptor {

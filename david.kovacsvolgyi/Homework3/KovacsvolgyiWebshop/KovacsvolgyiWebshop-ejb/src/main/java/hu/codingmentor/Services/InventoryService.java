@@ -18,7 +18,7 @@ import xyz.codingmentor.Exception.SoldOutException;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Singleton
 @Startup
@@ -36,6 +36,7 @@ public class InventoryService {
     
     }
     public MobileDTO addMobile(MobileDTO mobil){
+        mobil.setId(UUID.randomUUID().toString());
         if(!mobiles.add(mobil)){
             throw new IllegalArgumentException("We have this mobile already in store");
         }

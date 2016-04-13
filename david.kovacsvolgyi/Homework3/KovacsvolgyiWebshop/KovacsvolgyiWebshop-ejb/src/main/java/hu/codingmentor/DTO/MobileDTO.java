@@ -8,13 +8,15 @@ package hu.codingmentor.DTO;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import xyz.codingmentor.training.annotation.Validate;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
+@Validate
 public class MobileDTO {
-    @Pattern(regexp="[a-z0-9]{36}")
+    @Pattern(regexp="[a-z0-9-]{36}")
     String id;
     @NotNull
     String type;

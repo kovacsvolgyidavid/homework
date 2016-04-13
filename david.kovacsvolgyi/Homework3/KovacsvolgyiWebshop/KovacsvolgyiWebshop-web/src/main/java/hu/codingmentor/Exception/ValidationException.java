@@ -1,8 +1,8 @@
-package xyz.codingmentor.Exception;
+package hu.codingmentor.Exception;
 
 /**
  *
- * @author Denes Laszlo <denes.laszlo.88@gmail.com>
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 public class ValidationException extends RuntimeException{
     

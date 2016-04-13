@@ -6,7 +6,7 @@ import javax.enterprise.inject.spi.InjectionPoint;
 
 /**
  *
- * @author developer
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 public class LoggingProducer {
 

@@ -19,7 +19,7 @@ import org.junit.Test;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 public class MobileDTOTest {
     private static ValidatorFactory vf;

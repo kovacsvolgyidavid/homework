@@ -5,32 +5,36 @@
  */
 package hu.codingmentor.DTO;
 
-
 import hu.codinmentor.validation.OldEnough;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import xyz.codingmentor.training.annotation.Validate;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
+@Validate
 public class UserDTO {
-    @Pattern(regexp="....*")
+
+    @Pattern(regexp = "....*")
     @NotNull
     String username;
-    @Pattern(regexp="(?=.*[0-9=+<>.,])(?=.*[a-z])(?=.*[A-Z]).{6,}$")
+    @Pattern(regexp = "(?=.*[0-9=+<>.,])(?=.*[a-z])(?=.*[A-Z]).{6,}$")
     String password;
     String firstname;
     String lastname;
     @OldEnough
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     LocalDate dateOfBirth;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     LocalDate registrationDate;
     boolean admin;
-    List<MobileDTO> cart=new ArrayList<>();
+    List<MobileDTO> cart = new ArrayList<>();
 
     public UserDTO() {
     }
@@ -44,7 +48,7 @@ public class UserDTO {
         this.registrationDate = registrationDate;
         this.admin = admin;
     }
-    
+
     public String getUsername() {
         return username;
     }
@@ -112,6 +116,5 @@ public class UserDTO {
     public void deleteCart() {
         this.cart.removeAll(cart);
     }
-    
-    
+
 }

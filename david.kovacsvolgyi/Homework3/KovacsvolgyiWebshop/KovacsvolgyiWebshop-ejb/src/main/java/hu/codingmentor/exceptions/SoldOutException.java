@@ -7,7 +7,7 @@ package xyz.codingmentor.Exception;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 public class SoldOutException extends RuntimeException {
 

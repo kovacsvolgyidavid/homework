@@ -7,12 +7,12 @@ import javax.ws.rs.Produces;
 
 /**
  *
- * @author Denes Laszlo <denes.laszlo.88@gmail.com>
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 public class ValidatorProducer {
 
     @Produces
-    public Validator produceLogger() {
+    public Validator produceValidator() {
         ValidatorFactory vf = Validation.buildDefaultValidatorFactory();
         return vf.getValidator();
     }

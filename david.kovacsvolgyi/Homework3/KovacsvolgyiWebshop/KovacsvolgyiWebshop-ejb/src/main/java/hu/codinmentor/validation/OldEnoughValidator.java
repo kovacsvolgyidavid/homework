@@ -11,7 +11,7 @@ import javax.validation.ConstraintValidatorContext;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 public class OldEnoughValidator implements ConstraintValidator<OldEnough, LocalDate >{
 
@@ -22,7 +22,10 @@ public class OldEnoughValidator implements ConstraintValidator<OldEnough, LocalD
 
     @Override
     public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
-       return value.isBefore(LocalDate.now());
+       if(value==null){
+       return false;
+       }
+        return value.isBefore(LocalDate.now());
     }
     
 }

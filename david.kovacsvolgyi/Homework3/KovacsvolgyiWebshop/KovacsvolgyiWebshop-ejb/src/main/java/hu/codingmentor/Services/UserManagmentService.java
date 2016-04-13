@@ -17,7 +17,7 @@ import javax.ejb.Startup;
 
 /**
  *
- * @author keni
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Singleton
 @Startup
@@ -41,6 +41,7 @@ public class UserManagmentService {
         if (users.containsKey(user.getUsername())) {
             throw new IllegalArgumentException("We already have a user with this username");
         }
+        user.setRegistrationDate(LocalDate.now());
         users.put(user.getUsername(), user);
         return user;
     }
@@ -69,21 +70,24 @@ public class UserManagmentService {
     }
 
     public UserDTO getUser(String username) {
-       if(!users.containsKey(username)){
-       throw new IllegalArgumentException("There is no user with this name");
-       }
+        if (!users.containsKey(username)) {
+            throw new IllegalArgumentException("There is no user with this name");
+        }
         return users.get(username);
-             
+
     }
 
     public List<UserDTO> getUsers() {
-       List <UserDTO>usersRET=new ArrayList<>();
-        for(String username:users.keySet()){
-       usersRET.add(users.get(username));
-       
-       }
+        List<UserDTO> usersRET = new ArrayList<>();
+        for (String username : users.keySet()) {
+            usersRET.add(users.get(username));
+
+        }
         return usersRET;
     }
-    
+
+    public UserDTO getUser(UserDTO user) {
+        return getUser(user.getUsername());
+    }
 
 }

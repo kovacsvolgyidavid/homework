@@ -1,4 +1,4 @@
-package xyz.codingmentor.Exception;
+package hu.codingmentor.Exception;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,7 +10,7 @@ import javax.ws.rs.ext.Provider;
 
 /**
  *
- * @author Denes Laszlo <denes.laszlo.88@gmail.com>
+ * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Provider
 public class GeneralExceptionMapper implements ExceptionMapper<Throwable> {
