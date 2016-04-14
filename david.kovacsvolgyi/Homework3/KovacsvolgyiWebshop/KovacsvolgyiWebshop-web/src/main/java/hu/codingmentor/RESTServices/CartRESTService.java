@@ -8,7 +8,6 @@ package hu.codingmentor.RESTServices;
 import hu.codingmentor.DTO.MobileDTO;
 import hu.codingmentor.DTO.UserDTO;
 import hu.codingmentor.Services.CartService;
-import javax.ejb.EJB;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -17,6 +16,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import hu.codingmentor.training.interceptor.ValidatorInterceptor;
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -25,10 +27,10 @@ import javax.servlet.http.HttpSession;
  */
 @Path("/cart")
 @Interceptors(ValidatorInterceptor.class)
-public class CartRESTService {
+@SessionScoped
+public class CartRESTService implements Serializable {
 
-    @EJB
-    @Context
+    @Inject
     private CartService cart;
 
     @POST

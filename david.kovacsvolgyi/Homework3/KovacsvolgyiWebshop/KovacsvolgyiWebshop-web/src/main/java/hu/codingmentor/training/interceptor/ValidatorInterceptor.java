@@ -10,6 +10,7 @@ import javax.interceptor.InvocationContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import hu.codingmentor.Exception.ValidationException;
+import java.io.Serializable;
 import xyz.codingmentor.training.annotation.Validate;
 
 
@@ -18,7 +19,7 @@ import xyz.codingmentor.training.annotation.Validate;
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Interceptor
-public class ValidatorInterceptor {
+public class ValidatorInterceptor implements Serializable {
 
     @Inject
     private Validator validator;

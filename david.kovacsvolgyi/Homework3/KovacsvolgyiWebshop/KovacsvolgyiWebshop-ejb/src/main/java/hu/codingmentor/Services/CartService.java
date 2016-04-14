@@ -7,6 +7,7 @@ package hu.codingmentor.Services;
 
 import hu.codingmentor.DTO.MobileDTO;
 import hu.codingmentor.DTO.UserDTO;
+import java.io.Serializable;
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
@@ -16,7 +17,8 @@ import javax.ejb.Stateful;
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Stateful
-public class CartService {
+
+public class CartService implements Serializable {
 
     private InventoryService inventory;
     private UserManagmentService userService;
