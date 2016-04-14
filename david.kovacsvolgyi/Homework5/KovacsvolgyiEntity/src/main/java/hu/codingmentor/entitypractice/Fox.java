@@ -17,7 +17,18 @@ import javax.persistence.NamedQuery;
  * @author keni
  */
 @Entity
-
+@NamedQueries({
+@NamedQuery(
+        name="Fox.KillofFeri",
+        query="SELECT count(h.name) from  Rabbit r join Hunter h on h.id=r.hunter_fk"
+                + " where h.name ='Feri'"
+),
+        @NamedQuery(
+        name="Fox.KillofGeri",
+        query="SELECT count(h.name) from  Rabbit r join Hunter h on h.id=r.hunter_fk"
+                + " where h.name ='Geri'"
+)
+})
 public class Fox extends Animal {
     @Id@GeneratedValue
         private Long id;
