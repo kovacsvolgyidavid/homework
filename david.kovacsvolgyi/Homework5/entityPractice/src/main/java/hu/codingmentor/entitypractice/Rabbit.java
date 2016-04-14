@@ -21,7 +21,7 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
 @NamedQuery(
         name="Rabbit.KillofFeri",
-        query="SELECT h.hunter_id, r.id from,h.name  rabbit r outer join hunter h on h.hunter_id=r.hunter_id"
+        query="SELECT count(h.name) from  Rabbit r join Hunter h on h.id=r.hunter_fk"
                 + " where h.name ='Feri'"
 )
 })

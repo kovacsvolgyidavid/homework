@@ -72,8 +72,8 @@ public class Main {
     em.persist(rabbit4);
     hunter1.killRabbit(rabbit4);
     tx.commit();
-   /* TypedQuery<Integer>query=em.createNamedQuery("Hunter.FindGeri", Integer.class);
-        System.out.println(query.getSingleResult());*/
+   TypedQuery<Object>query=em.createNamedQuery("Rabbit.KillofFeri", Object.class);
+        System.out.println(query.getSingleResult());
     
     
     }

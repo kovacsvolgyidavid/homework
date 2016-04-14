@@ -36,10 +36,12 @@ public class InventoryService {
     
     }
     public MobileDTO addMobile(MobileDTO mobil){
-        mobil.setId(UUID.randomUUID().toString());
-        if(!mobiles.add(mobil)){
+        
+        if(mobiles.contains(mobil)){
             throw new IllegalArgumentException("We have this mobile already in store");
         }
+        mobil.setId(UUID.randomUUID().toString());
+        mobiles.add(mobil);
     return mobil;
     }
     public Integer buyMobile(MobileDTO mobil){
