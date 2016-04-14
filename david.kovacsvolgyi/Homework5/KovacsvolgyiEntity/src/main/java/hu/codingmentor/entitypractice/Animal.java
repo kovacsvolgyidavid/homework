@@ -20,12 +20,11 @@ import javax.persistence.TemporalType;
 @MappedSuperclass
 @Inheritance
 public abstract class Animal {
+
     @Enumerated(EnumType.STRING)
     protected FoodConsumption food;
     @Temporal(TemporalType.TIMESTAMP)
     protected Date killed;
-    
-    
 
     public Animal() {
     }
@@ -33,7 +32,7 @@ public abstract class Animal {
     public Animal(FoodConsumption food, Date killed) {
         this.food = food;
         this.killed = killed;
-        
+
     }
 
     public FoodConsumption getFood() {
@@ -51,6 +50,5 @@ public abstract class Animal {
     public void setKilled(Date killed) {
         this.killed = killed;
     }
-    
-    
+
 }

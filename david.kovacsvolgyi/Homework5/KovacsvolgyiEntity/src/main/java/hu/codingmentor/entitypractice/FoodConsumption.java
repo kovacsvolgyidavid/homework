@@ -10,5 +10,5 @@ package hu.codingmentor.entitypractice;
  * @author keni
  */
 public enum FoodConsumption {
-    MEAT,HERBIVORE
+    MEAT, HERBIVORE
 }

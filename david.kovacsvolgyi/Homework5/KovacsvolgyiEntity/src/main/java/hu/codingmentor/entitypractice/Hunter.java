@@ -26,14 +26,14 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-@NamedQuery(
-        name="Hunter.FindFeri",
-        query="SELECT h FROM Hunter h where h.name='Feri'"
-),
-@NamedQuery(
-        name="Hunter.FindGeri",
-        query="SELECT h FROM Hunter h where h.name='Geri'"
-)})
+    @NamedQuery(
+            name = "Hunter.FindFeri",
+            query = "SELECT h FROM Hunter h where h.name='Feri'"
+    ),
+    @NamedQuery(
+            name = "Hunter.FindGeri",
+            query = "SELECT h FROM Hunter h where h.name='Geri'"
+    )})
 public class Hunter implements Serializable {
 
     @Id
@@ -44,36 +44,79 @@ public class Hunter implements Serializable {
     @CollectionTable(name = "Tag")
     @Column(name = "value")
     private List<String> licenceNumbers;
-    @OneToMany(fetch=FetchType.EAGER)
-    @JoinColumn(name="hunter_fk")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "hunter_fk")
     private List<Fox> killedFoxes;
-    @OneToMany(fetch=FetchType.EAGER)
-    @JoinColumn(name="hunter_fk")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "hunter_fk")
     private List<Rabbit> killedRabbits;
-    public void addLicence(String licenceNumber){
-        this.licenceNumbers.add(licenceNumber);
-    
-    
-    }
-    public void killFox(Fox fox){
-        this.killedFoxes.add(fox);
-        
-}
-    public void killRabbit(Rabbit rabbit){
-        this.killedRabbits.add(rabbit);
-        
-}
+
     public Hunter(String name) {
         this.name = name;
-        this.killedRabbits=new ArrayList<>();
-        this.killedFoxes=new ArrayList<>();
-        this.licenceNumbers=new ArrayList<>();
+        this.killedRabbits = new ArrayList<>();
+        this.killedFoxes = new ArrayList<>();
+        this.licenceNumbers = new ArrayList<>();
     }
 
     public Hunter() {
-        this.killedRabbits=new ArrayList<>();
-        this.killedFoxes=new ArrayList<>();
-        this.licenceNumbers=new ArrayList<>();
+        this.killedRabbits = new ArrayList<>();
+        this.killedFoxes = new ArrayList<>();
+        this.licenceNumbers = new ArrayList<>();
+    }
+
+    public void addLicence(String licenceNumber) {
+        this.licenceNumbers.add(licenceNumber);
+
+    }
+
+    public void killFox(Fox fox) {
+        this.killedFoxes.add(fox);
+
+    }
+
+    public void killRabbit(Rabbit rabbit) {
+        this.killedRabbits.add(rabbit);
+        
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getLicenceNumbers() {
+        return licenceNumbers;
+    }
+
+    public void setLicenceNumbers(List<String> licenceNumbers) {
+        this.licenceNumbers = licenceNumbers;
+    }
+
+    public List<Fox> getKilledFoxes() {
+        return killedFoxes;
+    }
+
+    public void setKilledFoxes(List<Fox> killedFoxes) {
+        this.killedFoxes = killedFoxes;
+    }
+
+    public List<Rabbit> getKilledRabbits() {
+        return killedRabbits;
+    }
+
+    public void setKilledRabbits(List<Rabbit> killedRabbits) {
+        this.killedRabbits = killedRabbits;
     }
     
 }

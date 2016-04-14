@@ -19,27 +19,37 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-@NamedQuery(
-        name="Rabbit.KillofFeri",
-        query="SELECT count(h.name) from  Rabbit r join Hunter h on h.id=r.hunter_fk"
-                + " where h.name ='Feri'"
-),
-        @NamedQuery(
-        name="Rabbit.KillofGeri",
-        query="SELECT count(h.name) from  Rabbit r join Hunter h on h.id=r.hunter_fk"
-                + " where h.name ='Geri'"
-)
+    @NamedQuery(
+            name = "Rabbit.KillofFeri",
+            query = "SELECT count(h.name) from  Rabbit r join Hunter h on h.id=r.hunter_fk"
+            + " where h.name ='Feri'"
+    ),
+    @NamedQuery(
+            name = "Rabbit.KillofGeri",
+            query = "SELECT count(h.name) from  Rabbit r join Hunter h on h.id=r.hunter_fk"
+            + " where h.name ='Geri'"
+    )
 })
 public class Rabbit extends Animal implements Serializable {
-    @Id@GeneratedValue
-        private Long id;
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     public Rabbit() {
+        //this is for mapping purposes
     }
 
     public Rabbit(FoodConsumption food, Date killed) {
         super(food, killed);
     }
 
-   
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }
