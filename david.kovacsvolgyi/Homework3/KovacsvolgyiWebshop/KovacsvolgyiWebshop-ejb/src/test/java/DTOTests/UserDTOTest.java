@@ -5,7 +5,7 @@
  */
 package DTOTests;
 
-import xyz.codingmentor.training.DTO.UserDTO;
+import xyz.codingmentor.training.dtos.UserDTO;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Set;

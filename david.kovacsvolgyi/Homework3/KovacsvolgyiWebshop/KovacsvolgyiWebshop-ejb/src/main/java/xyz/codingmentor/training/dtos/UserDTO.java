@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.DTO;
+package xyz.codingmentor.training.dtos;
 
 import xyz.codingmentor.training.validation.OldEnough;
 import java.time.LocalDate;

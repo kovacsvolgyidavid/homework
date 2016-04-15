@@ -1,7 +1,7 @@
 package xyz.codingmentor.training.RESTServices;
 
-import xyz.codingmentor.training.DTO.UserDTO;
-import xyz.codingmentor.training.Services.UserManagmentService;
+import xyz.codingmentor.training.dtos.UserDTO;
+import xyz.codingmentor.training.services.UserManagmentService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.interceptor.ExcludeClassInterceptors;

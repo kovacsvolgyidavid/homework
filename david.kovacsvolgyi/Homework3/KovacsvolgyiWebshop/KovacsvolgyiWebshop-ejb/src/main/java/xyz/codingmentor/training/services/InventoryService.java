@@ -1,6 +1,6 @@
-package xyz.codingmentor.training.Services;
+package xyz.codingmentor.training.services;
 
-import xyz.codingmentor.training.DTO.MobileDTO;
+import xyz.codingmentor.training.dtos.MobileDTO;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

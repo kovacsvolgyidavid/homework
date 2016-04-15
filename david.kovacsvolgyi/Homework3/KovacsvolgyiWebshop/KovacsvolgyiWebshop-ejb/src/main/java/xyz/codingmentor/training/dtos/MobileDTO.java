@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.DTO;
+package xyz.codingmentor.training.dtos;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

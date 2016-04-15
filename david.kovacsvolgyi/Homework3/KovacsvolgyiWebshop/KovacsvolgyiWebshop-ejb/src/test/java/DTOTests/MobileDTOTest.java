@@ -5,7 +5,7 @@
  */
 package DTOTests;
 
-import xyz.codingmentor.training.DTO.MobileDTO;
+import xyz.codingmentor.training.dtos.MobileDTO;
 import java.util.Set;
 import javax.validation.Validation;
 import javax.validation.Validator;

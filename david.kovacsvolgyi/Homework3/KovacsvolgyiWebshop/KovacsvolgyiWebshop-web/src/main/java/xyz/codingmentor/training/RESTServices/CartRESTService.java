@@ -1,8 +1,8 @@
 package xyz.codingmentor.training.RESTServices;
 
-import xyz.codingmentor.training.DTO.MobileDTO;
-import xyz.codingmentor.training.DTO.UserDTO;
-import xyz.codingmentor.training.Services.CartService;
+import xyz.codingmentor.training.dtos.MobileDTO;
+import xyz.codingmentor.training.dtos.UserDTO;
+import xyz.codingmentor.training.services.CartService;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;

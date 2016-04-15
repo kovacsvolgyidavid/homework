@@ -1,6 +1,6 @@
-package xyz.codingmentor.training.Services;
+package xyz.codingmentor.training.services;
 
-import xyz.codingmentor.training.DTO.UserDTO;
+import xyz.codingmentor.training.dtos.UserDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;

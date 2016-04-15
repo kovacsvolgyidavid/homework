@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.DTO;
+package xyz.codingmentor.training.dtos;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
