@@ -7,7 +7,7 @@ package xyz.codingmentor.training.entitypractice;
 
 /**
  *
- * @author keni
+ * @author Kovácsvölgyi Dávid <kovacsvolgyi.david@gmail.com>
  */
 public enum FoodConsumption {
     MEAT, HERBIVORE

@@ -2,7 +2,6 @@ package xyz.codingmentor.training.services;
 
 import java.math.BigInteger;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Resource;
 import javax.ejb.AsyncResult;

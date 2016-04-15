@@ -18,7 +18,7 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author keni
+ * @author Kovácsvölgyi Dávid <kovacsvolgyi.david@gmail.com>
  */
 public class Main {
 

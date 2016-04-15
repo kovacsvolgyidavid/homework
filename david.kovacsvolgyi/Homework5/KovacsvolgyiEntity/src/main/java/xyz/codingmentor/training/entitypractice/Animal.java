@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author keni
+ * @author Kovácsvölgyi Dávid <kovacsvolgyi.david@gmail.com>
  */
 @MappedSuperclass
 @Inheritance

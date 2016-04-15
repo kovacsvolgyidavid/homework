@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package xyz.codingmentor.training.RESTServices;
 
 import xyz.codingmentor.training.services.AsynchronousCallService;
@@ -13,12 +8,10 @@ import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 
 /**
  *
- * @author keni
+ * @author Kovácsvölgyi Dávid <kovacsvolgyi.david@gmail.com>
  */
 @Path("/")
 public class AsynchronusRESTService {
@@ -30,7 +23,7 @@ public class AsynchronusRESTService {
 
     @GET
     @Path("/mail")
-    public Boolean sendMail() throws InterruptedException, ExecutionException {
+    public Boolean sendMail() throws InterruptedException {
 
         Future<BigInteger> future = asyncService.asyncCall();
 
@@ -40,7 +33,11 @@ public class AsynchronusRESTService {
                 throw new IllegalStateException("I have been disrupted");
             }
         }
-        System.out.println(future.get());
+        try {
+            LOGGER.info(future.get().toString());
+        } catch (ExecutionException ex) {
+            LOGGER.severe("Execaution failed, reason:" + ex.getMessage());
+        }
         return true;
     }
 

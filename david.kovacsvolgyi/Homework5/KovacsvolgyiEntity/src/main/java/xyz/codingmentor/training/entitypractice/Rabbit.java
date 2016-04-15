@@ -15,7 +15,7 @@ import javax.persistence.NamedQuery;
 
 /**
  *
- * @author keni
+ * @author Kovácsvölgyi Dávid <kovacsvolgyi.david@gmail.com>
  */
 @Entity
 @NamedQueries({
