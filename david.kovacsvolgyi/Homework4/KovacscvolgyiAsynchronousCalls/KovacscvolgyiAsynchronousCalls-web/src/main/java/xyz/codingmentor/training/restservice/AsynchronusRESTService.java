@@ -1,9 +1,10 @@
-package xyz.codingmentor.training.RESTServices;
+package xyz.codingmentor.training.restservice;
 
 import xyz.codingmentor.training.services.AsynchronousCallService;
 import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -17,7 +18,7 @@ import javax.ws.rs.Path;
 public class AsynchronusRESTService {
 
     @Inject
-    private Logger LOGGER;
+    private Logger logger;
     @Inject
     private AsynchronousCallService asyncService;
 
@@ -28,15 +29,15 @@ public class AsynchronusRESTService {
         Future<BigInteger> future = asyncService.asyncCall();
 
         while (!future.isDone()) {
-            LOGGER.info("I have the power");
+            logger.info("I have the power");
             if (future.isCancelled()) {
                 throw new IllegalStateException("I have been disrupted");
             }
         }
         try {
-            LOGGER.info(future.get().toString());
+            logger.info(future.get().toString());
         } catch (ExecutionException ex) {
-            LOGGER.severe("Execaution failed, reason:" + ex.getMessage());
+            logger.info((Supplier<String>) ex);
         }
         return true;
     }

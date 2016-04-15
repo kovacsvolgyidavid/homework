@@ -21,7 +21,7 @@ public class AsynchronousCallService {
     @Resource
     private SessionContext context;
     @Inject
-    private Logger LOGGER;
+    private Logger logger;
 
     public Future<BigInteger> asyncCall() {
         BigInteger operand1 = new BigInteger("0");
@@ -36,7 +36,7 @@ public class AsynchronousCallService {
         if (context.wasCancelCalled()) {
             return new AsyncResult<>(new BigInteger("-1"));
         } else {
-            LOGGER.info("I'm finished");
+            logger.info("I'm finished");
             return new AsyncResult<>(i);
         }
     }

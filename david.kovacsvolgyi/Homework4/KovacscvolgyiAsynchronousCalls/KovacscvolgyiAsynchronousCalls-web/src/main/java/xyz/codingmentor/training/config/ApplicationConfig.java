@@ -1,7 +1,7 @@
 package xyz.codingmentor.training.config;
 
 
-import xyz.codingmentor.training.RESTServices.AsynchronusRESTService;
+import xyz.codingmentor.training.restservice.AsynchronusRESTService;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
