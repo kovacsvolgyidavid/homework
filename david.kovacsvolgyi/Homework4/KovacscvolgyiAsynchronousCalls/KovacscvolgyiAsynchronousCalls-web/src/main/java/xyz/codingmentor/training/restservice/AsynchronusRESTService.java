@@ -4,7 +4,6 @@ import xyz.codingmentor.training.services.AsynchronousCallService;
 import java.math.BigInteger;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.function.Supplier;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -37,7 +36,7 @@ public class AsynchronusRESTService {
         try {
             logger.info(future.get().toString());
         } catch (ExecutionException ex) {
-            logger.info(""+ex);
+            logger.info(ex.getMessage() + ex);
         }
         return true;
     }
