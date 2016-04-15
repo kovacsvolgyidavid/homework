@@ -37,7 +37,7 @@ public class AsynchronusRESTService {
         try {
             logger.info(future.get().toString());
         } catch (ExecutionException ex) {
-            logger.info((Supplier<String>) ex);
+            logger.info(""+ex);
         }
         return true;
     }

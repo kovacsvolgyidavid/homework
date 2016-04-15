@@ -1,5 +1,6 @@
 package xyz.codingmentor.training.dtos;
 
+import java.util.Objects;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -73,6 +74,47 @@ public class MobileDTO {
 
     public void setPiece(int piece) {
         this.piece = piece;
+    }
+   
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.type);
+        hash = 13 * hash + Objects.hashCode(this.manufacturer);
+        hash = 13 * hash + this.price;
+        hash = 13 * hash + this.piece;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MobileDTO other = (MobileDTO) obj;
+        if (this.price != other.price) {
+            return false;
+        }
+        if (this.piece != other.piece) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (!Objects.equals(this.manufacturer, other.manufacturer)) {
+            return false;
+        }
+        return true;
     }
 
 }

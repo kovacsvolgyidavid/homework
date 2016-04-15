@@ -12,9 +12,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import xyz.codingmentor.training.interceptor.ValidatorInterceptor;
 import java.io.Serializable;
-import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.Produces;
+import xyz.codingmentor.training.services.InventoryService;
 
 /**
  *
@@ -25,19 +27,26 @@ import javax.servlet.http.HttpSession;
 @SessionScoped
 public class CartRESTService implements Serializable {
 
-    @EJB
+    @Inject
     private CartService cart;
+    @Inject
+    private InventoryService inventory;
 
     @POST
     @Path("/")
     @Consumes("application/json")
-    public Object addToCart(@Context HttpServletRequest request, MobileDTO mobile) {
+    @Produces("application/json")
+    @SessionScoped
+    public MobileDTO addToCart(@Context HttpServletRequest request, MobileDTO mobile) {
 
         HttpSession session = request.getSession();
         Object userObject = session.getAttribute("user");
 
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
+            if (!inventory.isItAMobile(mobile)) {
+                throw new IllegalArgumentException("We don't have this mobile in our store.");
+            }
             user = (UserDTO) userObject;
             return cart.addToCart(user, mobile);
         } else {
@@ -47,13 +56,15 @@ public class CartRESTService implements Serializable {
     }
 
     @GET
-    @Path("/")
+    @Path("/checkout")
+    @SessionScoped
+    @Produces("application/Text")
     public Integer checkout(@Context HttpServletRequest request) {//TODO valami itt nem jó
         HttpSession session = request.getSession();
         Object userObject = request.getAttribute("user");
-
+        UserDTO user;
         if (userObject != null && userObject instanceof UserDTO) {
-            UserDTO user = (UserDTO) userObject;
+            user = (UserDTO) userObject;
 
             return cart.checkout(user);
         } else {

@@ -60,12 +60,9 @@ public class InventoryRESTService {
         HttpSession session = request.getSession();
         Object userObject = session.getAttribute("user");
 
-        UserDTO user;
-        if (userObject instanceof UserDTO && userObject != null) {
-            user = (UserDTO) userObject;
-
-        } else {
+        if (userObject == null && !(userObject instanceof UserDTO)) {
             throw new IllegalArgumentException("Please log in");
+
         }
         return inventory.getMobilesList();
 

@@ -3,9 +3,12 @@ package xyz.codingmentor.training.services;
 import xyz.codingmentor.training.dtos.MobileDTO;
 import xyz.codingmentor.training.dtos.UserDTO;
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
+import javax.ejb.LocalBean;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
+import javax.ejb.StatefulTimeout;
 import javax.inject.Inject;
 
 /**
@@ -13,6 +16,8 @@ import javax.inject.Inject;
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Stateful
+@StatefulTimeout(value = 500, unit = TimeUnit.SECONDS)
+@LocalBean
 public class CartService implements Serializable {
 
     @Inject
@@ -25,11 +30,10 @@ public class CartService implements Serializable {
     //TODO: működés megvalósítása
     public MobileDTO addToCart(UserDTO user, MobileDTO mobile) {
 
-        if (!inventory.isItAMobile(mobile)) {
-            throw new IllegalArgumentException("We don't have this mobile in our store.");
-        }
-        UserDTO listedUser = userService.getUser(user);
-        listedUser.getCart().add(mobile);
+      
+      
+       userService.editUser(user.addCart(mobile), user);
+        
         return mobile;
 
     }

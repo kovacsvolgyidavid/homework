@@ -4,6 +4,7 @@ import xyz.codingmentor.training.validation.OldEnough;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -111,5 +112,61 @@ public class UserDTO {
     public void deleteCart() {
         this.cart.removeAll(cart);
     }
+     public UserDTO addCart(MobileDTO mobile){
+        this.cart.add(mobile);
+        return this;
+    }
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 37 * hash + Objects.hashCode(this.username);
+        hash = 37 * hash + Objects.hashCode(this.password);
+        hash = 37 * hash + Objects.hashCode(this.firstname);
+        hash = 37 * hash + Objects.hashCode(this.lastname);
+        hash = 37 * hash + Objects.hashCode(this.dateOfBirth);
+        hash = 37 * hash + Objects.hashCode(this.registrationDate);
+        hash = 37 * hash + (this.admin ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.cart);
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UserDTO other = (UserDTO) obj;
+        if (this.admin != other.admin) {
+            return false;
+        }
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstname, other.firstname)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastname, other.lastname)) {
+            return false;
+        }
+        if (!Objects.equals(this.dateOfBirth, other.dateOfBirth)) {
+            return false;
+        }
+        if (!Objects.equals(this.registrationDate, other.registrationDate)) {
+            return false;
+        }
+        if (!Objects.equals(this.cart, other.cart)) {
+            return false;
+        }
+        return true;
+    }
+    
 }
