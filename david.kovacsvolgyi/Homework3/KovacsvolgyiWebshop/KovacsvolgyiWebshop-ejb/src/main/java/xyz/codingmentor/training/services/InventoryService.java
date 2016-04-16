@@ -2,8 +2,10 @@ package xyz.codingmentor.training.services;
 
 import xyz.codingmentor.training.dtos.MobileDTO;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
@@ -17,51 +19,53 @@ import xyz.codingmentor.training.exceptions.SoldOutException;
  */
 @Singleton
 @Startup
-public class InventoryService {
+public class InventoryService {//TODO újraírni
 
-    private final Set<MobileDTO> mobiles = new HashSet<>();
+    private final Map<String, MobileDTO> mobiles = new HashMap<>();
 
     @PostConstruct
     private void addMobileOnStart() {
-        mobiles.add(new MobileDTO(UUID.randomUUID().toString(), "3610", "Nokia", 50, 3));
-        mobiles.add(new MobileDTO(UUID.randomUUID().toString(), "Lumia45", "Nokia", 500, 12));
-        mobiles.add(new MobileDTO(UUID.randomUUID().toString(), "XperiaZ4", "Sony", 1, 5));
-        mobiles.add(new MobileDTO(UUID.randomUUID().toString(), "10s", "iPhone", 99999999, 0));
+        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad0", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad0", "3610", "Nokia", 50, 3));
+        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad1", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad1", "Lumia45", "Nokia", 500, 12));
+        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad2", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad2", "XperiaZ4", "Sony", 1, 5));
+        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad3", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad3", "10s", "iPhone", 99999999, 0));
 
     }
 
     public MobileDTO addMobile(MobileDTO mobil) {
 
-        if (mobiles.contains(mobil)) {
-            throw new IllegalArgumentException("We have this mobile already in store");
+        if (mobiles.get(mobil.getId()).equals(mobil)) {
+            throw new IllegalArgumentException("We have this mobile in store, already.");
         }
         mobil.setId(UUID.randomUUID().toString());
-        mobiles.add(mobil);
+        mobiles.put(mobil.getId(), mobil);
         return mobil;
     }
 
     public Integer buyMobile(MobileDTO mobil) {
-        if (!mobiles.contains(mobil)) {
+        if (!mobiles.containsKey(mobil.getId())) {
             throw new IllegalArgumentException("we don't have this kind of mobile");
         }
-        if (mobil.getPiece() <= 0) {
+        MobileDTO listedMobile = mobiles.get(mobil.getId());
+        if (listedMobile.getPiece() <= 0) {
             throw new SoldOutException("We don't have any of this mobile on stock :(");
         }
-        mobiles.remove(mobil);
-        MobileDTO mobilBuffer = mobil;
-        mobilBuffer.setPiece(mobilBuffer.getPiece() - 1);
-        mobiles.add(mobilBuffer);
-        return mobilBuffer.getPrice();
+        listedMobile.setPiece(listedMobile.getPiece() - 1);
+        return listedMobile.getPrice();
 
     }
 
     public List<MobileDTO> getMobilesList() {
         List<MobileDTO> mobileList = new ArrayList<>();
-        mobileList.addAll(mobiles);
+        Set<MobileDTO> mobileSet = new HashSet<>();
+        mobiles.keySet().stream().forEach((id) -> {
+            mobileSet.add(mobiles.get(id));
+        });
+        mobileList.addAll(mobileSet);
         return mobileList;
     }
 
     public boolean isItAMobile(MobileDTO mobile) {
-        return mobiles.contains(mobile);
+        return mobiles.get(mobile.getId()).equals(mobile);
     }
 }

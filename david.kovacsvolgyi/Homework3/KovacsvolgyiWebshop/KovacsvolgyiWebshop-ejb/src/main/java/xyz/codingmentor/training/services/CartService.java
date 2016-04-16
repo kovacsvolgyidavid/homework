@@ -3,6 +3,7 @@ package xyz.codingmentor.training.services;
 import xyz.codingmentor.training.dtos.MobileDTO;
 import xyz.codingmentor.training.dtos.UserDTO;
 import java.io.Serializable;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
@@ -30,18 +31,23 @@ public class CartService implements Serializable {
     //TODO: működés megvalósítása
     public MobileDTO addToCart(UserDTO user, MobileDTO mobile) {
 
-      
-      
-       userService.editUser(user.addCart(mobile), user);
-        
+        user.addCart(mobile);
+        //userService.editUser(user.addCart(mobile), user);
+
         return mobile;
 
     }
 
-    public Integer checkout(UserDTO user) {//TODO itt jártam
+    public List<MobileDTO> getCart(UserDTO user) {
+        return user.getCart();
+    }
+
+    public Integer checkout(UserDTO user) {
         Integer fullPrice = 0;
+
         fullPrice = user.getCart().stream().map((mobile) -> inventory.buyMobile(mobile)).reduce(fullPrice, Integer::sum);
         user.deleteCart();
+
         return fullPrice;
 
     }

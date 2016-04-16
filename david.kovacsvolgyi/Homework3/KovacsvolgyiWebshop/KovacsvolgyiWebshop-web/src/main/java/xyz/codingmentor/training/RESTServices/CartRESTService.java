@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import xyz.codingmentor.training.interceptor.ValidatorInterceptor;
 import java.io.Serializable;
-import java.util.logging.Logger;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -25,15 +25,15 @@ import xyz.codingmentor.training.services.InventoryService;
  */
 @Path("/cart")
 @Interceptors(ValidatorInterceptor.class)
+@SessionScoped
 public class CartRESTService implements Serializable {
 
     @Inject
-    @SessionScoped
+
     private CartService cart;
     @Inject
     private InventoryService inventory;
-    @Inject
-    private Logger logger;
+
     @POST
     @Path("/")
     @Consumes("application/json")
@@ -58,18 +58,36 @@ public class CartRESTService implements Serializable {
     }
 
     @GET
-    @Path("/checkout")
-    
-    @Produces("application/Text")
-    public Integer checkout(@Context HttpServletRequest request) {//TODO valami itt nem jó
+    @Path("/")
+    @Produces("application/json")
+
+    public List<MobileDTO> getCart(@Context HttpServletRequest request) {
+
         HttpSession session = request.getSession();
-        Object userObject = request.getAttribute("user");
-        logger.info(userObject.toString());
+        Object userObject = session.getAttribute("user");
+
+        UserDTO user;
+        if (userObject instanceof UserDTO && userObject != null) {
+            user=(UserDTO) userObject;
+            return cart.getCart(user);
+        } else {
+            throw new IllegalArgumentException("Please log in");
+        }
+
+    }
+
+    @GET
+    @Path("/checkout")
+    @Produces("application/json")
+    public String checkout(@Context HttpServletRequest request) {//TODO valami itt nem jó
+        HttpSession session = request.getSession();
+        Object userObject = session.getAttribute("user");
+
         UserDTO user;
         if (userObject != null && userObject instanceof UserDTO) {
             user = (UserDTO) userObject;
 
-            return cart.checkout(user);
+            return cart.checkout(user).toString();
         } else {
             throw new IllegalArgumentException("Please login");
         }
