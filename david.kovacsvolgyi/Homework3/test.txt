@@ -1,0 +1,143 @@
+Post: http://localhost:8080/KovacsvolgyiWebshop-web/user/login
+{
+"password": "admin",
+"username": "admin"
+}
+
+Post: http://localhost:8080/KovacsvolgyiWebshop-web/user/
+{
+"admin": false,
+  "dateOfBirth": "1990-09-05",
+"firstname": "Gergo",
+"lastname": "Somfai",
+"password": "dummypassword",
+"username": "useg"
+} //ez nem jó nyílván rossz a password
+
+{
+"admin": false,
+  "dateOfBirth": "1990-09-05",
+"firstname": "Gergo",
+"lastname": "Somfai",
+"password": "useAfe3",
+"username": "useg"
+}//itt jó a password illeszkedik a rex-re
+//ugyanezt mégegyszer meghívva nem engedi
+
+Get:http://localhost:8080/KovacsvolgyiWebshop-web/user/
+//benne van a listában
+Put:http://localhost:8080/KovacsvolgyiWebshop-web/user/useg
+{
+"admin": false,
+  "dateOfBirth": "1990-09-05",
+"firstname": "Gergo",
+"lastname": "Somfai",
+"password": "useAfe3",
+"username": "usent"
+}//nem engedi mert rossz a username
+{
+"admin": false,
+  "dateOfBirth": "1990-09-05",
+"firstname": "Gergo",
+"lastname": "Somfai",
+"password": "Goodpassword2",
+"username": "useg"
+}//itt nyalvén megy minden
+
+Get:http://localhost:8080/KovacsvolgyiWebshop-web/user/useg
+Delete:http://localhost:8080/KovacsvolgyiWebshop-web/user/useg
+Get:http://localhost:8080/KovacsvolgyiWebshop-web/user/logout
+
+//Most kipróbáljuk hogy user nem éri el a neki nem látható funkciókat:
+Post: http://localhost:8080/KovacsvolgyiWebshop-web/user/login
+{
+"password": "user",
+"username": "user"
+}
+
+Post: http://localhost:8080/KovacsvolgyiWebshop-web/user/
+{
+"admin": false,
+  "dateOfBirth": "1990-09-05",
+"firstname": "Gergo",
+"lastname": "Somfai",
+"password": "useAfe3",
+"username": "useg"
+}
+
+Get:http://localhost:8080/KovacsvolgyiWebshop-web/user/
+//nem kap listát
+Put:http://localhost:8080/KovacsvolgyiWebshop-web/user/user
+{
+"admin": false,
+  "dateOfBirth": "1990-09-05",
+"firstname": "Gergo",
+"lastname": "Somfai",
+"password": "useAfe3",
+"username": "user"
+}//nem fogaj tudni módostani
+
+
+Get:http://localhost:8080/KovacsvolgyiWebshop-web/user/user
+Delete:http://localhost:8080/KovacsvolgyiWebshop-web/user/user
+Get:http://localhost:8080/KovacsvolgyiWebshop-web/user/logout
+
+//innentől admin bejelentkezés:
+
+Post: http://localhost:8080/KovacsvolgyiWebshop-web/mobiles
+ {
+"id": "a5546f0e-c3b3-45ff-af84-87066b9e8ad3",
+"manufacturer": "iPhone",
+"piece": 0,
+"price": 99999999,
+"type": "10s"
+ }
+  {
+"id": "a5546f0e-c3b3-45ff-af84-87066b9e8ad3",
+"manufacturer": "Samsung",
+"piece": 0,
+"price": 10,
+"type": "s2i"
+ }//FONTOS: ez hozzá legyen adva
+ Get: http://localhost:8080/KovacsvolgyiWebshop-web/mobiles
+ 
+ 
+ Post:  http://localhost:8080/KovacsvolgyiWebshop-web/cart
+ {
+"id": "d29ad7de-f384-4863-aa97-126fcce974c7",
+"manufacturer": "Samsung",
+"piece": 0,
+"price": 10,
+"type": "s2i"
+}
+Get: http://localhost:8080/KovacsvolgyiWebshop-web/cart/checkout
+
+//nyílván nem tudunk chekoutolni
+
+Post: http://localhost:8080/KovacsvolgyiWebshop-web/cart
+3x
+{
+"id": "a5546f0e-c3b3-45ff-af84-87066b9e8ad0",
+"manufacturer": "Nokia",
+"piece": 3,
+"price": 50,
+"type": "3610"
+}
+4x
+{
+"id": "a5546f0e-c3b3-45ff-af84-87066b9e8ad1",
+"manufacturer": "Nokia",
+"piece": 12,
+"price": 500,
+"type": "Lumia45"
+}
+
+Get: http://localhost:8080/KovacsvolgyiWebshop-web/cart/checkout
+
+ Get: http://localhost:8080/KovacsvolgyiWebshop-web/mobiles
+ //megnézzük tényleg levonta a darabszámokat
+
+
+
+
+
