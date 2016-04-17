@@ -1,6 +1,5 @@
 package xyz.codingmentor.training.services;
 
-import java.io.Serializable;
 import xyz.codingmentor.training.dtos.UserDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import javax.ejb.Startup;
  */
 @Singleton
 @Startup
-public class UserManagmentService implements Serializable {
+public class UserManagmentService {
 
     private final Map<String, UserDTO> users = new HashMap<>();
 
@@ -75,10 +74,8 @@ public class UserManagmentService implements Serializable {
 
     public List<UserDTO> getUsers() {
         List<UserDTO> usersRET = new ArrayList<>();
-        for (String username : users.keySet()) {
-            usersRET.add(users.get(username));
-
-        }
+        users.entrySet().stream().forEach(entry
+                -> usersRET.add(entry.getValue()));
         return usersRET;
     }
 

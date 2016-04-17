@@ -40,7 +40,8 @@ public class CartService implements Serializable {
     public Integer checkout(UserDTO user) {
         Integer fullPrice = 0;
         try {
-            fullPrice = user.getCart().stream().map((mobile) -> inventory.buyMobile(mobile)).reduce(fullPrice, Integer::sum);
+            fullPrice = user.getCart().stream().map(mobile
+                    -> inventory.buyMobile(mobile)).reduce(fullPrice, Integer::sum);
         } catch (SoldOutException sex) {
             user.deleteCart();
             throw sex;
