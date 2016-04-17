@@ -1,5 +1,6 @@
 package xyz.codingmentor.training.services;
 
+import xyz.codingmentor.training.exceptions.CheckoutFailedException;
 import xyz.codingmentor.training.dtos.MobileDTO;
 import xyz.codingmentor.training.dtos.UserDTO;
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import javax.ejb.StatefulTimeout;
 import javax.inject.Inject;
+import xyz.codingmentor.training.exceptions.SoldOutException;
 
 /**
  *
@@ -44,8 +46,13 @@ public class CartService implements Serializable {
 
     public Integer checkout(UserDTO user) {
         Integer fullPrice = 0;
-
-        fullPrice = user.getCart().stream().map((mobile) -> inventory.buyMobile(mobile)).reduce(fullPrice, Integer::sum);
+        try{
+        fullPrice = user.getCart().stream().map((mobile) -> inventory.buyMobile(mobile)).reduce(fullPrice, Integer::sum);}
+        catch(SoldOutException sex){
+            user.deleteCart();
+            throw new CheckoutFailedException("Checkout failed: user's cart has been deleted");
+        
+        }
         user.deleteCart();
 
         return fullPrice;

@@ -112,10 +112,12 @@ public class UserDTO {
     public void deleteCart() {
         this.cart.removeAll(cart);
     }
-     public UserDTO addCart(MobileDTO mobile){
+
+    public UserDTO addCart(MobileDTO mobile) {
         this.cart.add(mobile);
         return this;
     }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -168,5 +170,5 @@ public class UserDTO {
         }
         return true;
     }
-    
+
 }

@@ -75,7 +75,7 @@ public class MobileDTO {
     public void setPiece(int piece) {
         this.piece = piece;
     }
-   
+
     @Override
     public int hashCode() {
         int hash = 5;

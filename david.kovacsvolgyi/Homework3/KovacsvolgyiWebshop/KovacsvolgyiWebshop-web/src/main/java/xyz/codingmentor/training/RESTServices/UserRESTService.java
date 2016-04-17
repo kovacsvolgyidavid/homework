@@ -1,9 +1,14 @@
 package xyz.codingmentor.training.RESTServices;
 
+import xyz.codingmentor.training.Exception.AlreadyLoggedInException;
+import java.io.Serializable;
 import xyz.codingmentor.training.dtos.UserDTO;
 import xyz.codingmentor.training.services.UserManagmentService;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.interceptor.ExcludeClassInterceptors;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
@@ -18,16 +23,15 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import xyz.codingmentor.training.interceptor.ValidatorInterceptor;
 
-
 /**
  *
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Path("/user")
 @Interceptors(ValidatorInterceptor.class)
- 
-public class UserRESTService {
-
+public class UserRESTService implements Serializable {
+    @Inject
+    Conversation conversation;
     @EJB
     UserManagmentService userManager;
 
@@ -39,7 +43,7 @@ public class UserRESTService {
         Object userObject = session.getAttribute("user");
 
         UserDTO user;
-        if (userObject != null&& userObject instanceof UserDTO) {
+        if (userObject != null && userObject instanceof UserDTO) {
             user = (UserDTO) userObject;
 
         } else {
@@ -151,8 +155,12 @@ public class UserRESTService {
     @Path("/login")
     @ExcludeClassInterceptors
     public boolean login(@Context HttpServletRequest request, UserDTO userJ) {
+        
         HttpSession session = request.getSession(true);
-
+        Object objectUser = session.getAttribute("user");
+        if(objectUser != null && objectUser instanceof UserDTO){
+            throw new AlreadyLoggedInException("You are already logged in");
+        }
         UserDTO user = userManager.getUser(userJ.getUsername());
         if (user == null) {
             throw new IllegalArgumentException("No such username");
@@ -160,6 +168,7 @@ public class UserRESTService {
         if (user.getPassword().equals(userJ.getPassword())) {
             session.setMaxInactiveInterval(20000);
             session.setAttribute("user", user);
+            
 
             return true;
         } else {
@@ -170,13 +179,13 @@ public class UserRESTService {
     }
 
     @Path("/logout")
-    @POST
-    @Consumes("aplication/json")
+    @GET
     public boolean logout(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object objectUser = session.getAttribute("user");
 
         if (objectUser != null && objectUser instanceof UserDTO) {
+           
             session.invalidate();
             return true;
         }
