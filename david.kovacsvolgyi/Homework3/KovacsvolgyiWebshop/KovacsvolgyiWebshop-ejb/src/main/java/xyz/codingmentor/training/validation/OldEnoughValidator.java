@@ -12,7 +12,7 @@ public class OldEnoughValidator implements ConstraintValidator<OldEnough, LocalD
 
     @Override
     public void initialize(OldEnough constraintAnnotation) {
-
+        //Only overide puposes
     }
 
     @Override

@@ -1,11 +1,11 @@
-package xyz.codingmentor.training.Exception;
+package xyz.codingmentor.training.exception;
 
 /**
  *
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
-public class ValidationException extends RuntimeException{
-    
+public class ValidationException extends RuntimeException {
+
     public ValidationException(String msg) {
         super(msg);
     }

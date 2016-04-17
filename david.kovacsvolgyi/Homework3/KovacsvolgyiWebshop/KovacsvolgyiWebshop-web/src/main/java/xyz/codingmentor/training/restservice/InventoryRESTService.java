@@ -1,9 +1,10 @@
-package xyz.codingmentor.training.RESTServices;
+package xyz.codingmentor.training.restservice;
 
 import xyz.codingmentor.training.dtos.MobileDTO;
 import xyz.codingmentor.training.dtos.UserDTO;
 import xyz.codingmentor.training.services.InventoryService;
 import java.util.List;
+import javax.inject.Inject;
 import javax.interceptor.Interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import xyz.codingmentor.training.interceptor.ValidatorInterceptor;
-import javax.ejb.EJB;
 import javax.interceptor.ExcludeClassInterceptors;
 import javax.ws.rs.Produces;
 
@@ -25,8 +25,8 @@ import javax.ws.rs.Produces;
 @Interceptors(ValidatorInterceptor.class)
 public class InventoryRESTService {
 
-    @EJB
-    InventoryService inventory;
+    @Inject
+    private transient InventoryService inventory;
 
     @POST
     @Path("/")

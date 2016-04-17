@@ -1,5 +1,6 @@
 package xyz.codingmentor.training.services;
 
+import java.io.Serializable;
 import xyz.codingmentor.training.dtos.UserDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ import javax.ejb.Startup;
  */
 @Singleton
 @Startup
-public class UserManagmentService {
+public class UserManagmentService implements Serializable {
 
     private final Map<String, UserDTO> users = new HashMap<>();
 

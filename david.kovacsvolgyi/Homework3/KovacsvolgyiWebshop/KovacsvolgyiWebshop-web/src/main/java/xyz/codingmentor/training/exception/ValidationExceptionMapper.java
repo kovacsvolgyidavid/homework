@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.Exception;
+package xyz.codingmentor.training.exception;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

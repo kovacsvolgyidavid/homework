@@ -19,7 +19,7 @@ import xyz.codingmentor.training.exceptions.SoldOutException;
  */
 @Singleton
 @Startup
-public class InventoryService {//TODO újraírni
+public class InventoryService {
 
     private final Map<String, MobileDTO> mobiles = new HashMap<>();
 
@@ -34,7 +34,7 @@ public class InventoryService {//TODO újraírni
 
     public MobileDTO addMobile(MobileDTO mobil) {
 
-        if (mobiles.get(mobil.getId())!=null&&mobiles.get(mobil.getId()).equals(mobil)) {
+        if (mobiles.get(mobil.getId()) != null && mobiles.get(mobil.getId()).equals(mobil)) {
             throw new IllegalArgumentException("We have this mobile in store, already.");
         }
         mobil.setId(UUID.randomUUID().toString());
@@ -47,7 +47,7 @@ public class InventoryService {//TODO újraírni
             throw new IllegalArgumentException("we don't have this kind of mobile");
         }
         MobileDTO listedMobile = mobiles.get(mobil.getId());
-        
+
         if (listedMobile.getPiece() <= 0) {
             throw new SoldOutException("We don't have any of this mobile on stock :(");
         }
@@ -59,9 +59,8 @@ public class InventoryService {//TODO újraírni
     public List<MobileDTO> getMobilesList() {
         List<MobileDTO> mobileList = new ArrayList<>();
         Set<MobileDTO> mobileSet = new HashSet<>();
-        mobiles.keySet().stream().forEach((id) -> {
-            mobileSet.add(mobiles.get(id));
-        });
+        mobiles.keySet().stream().forEach((id)
+                -> mobileSet.add(mobiles.get(id)));
         mobileList.addAll(mobileSet);
         return mobileList;
     }

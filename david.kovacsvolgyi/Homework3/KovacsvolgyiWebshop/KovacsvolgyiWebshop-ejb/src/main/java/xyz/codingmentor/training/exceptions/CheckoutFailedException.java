@@ -16,5 +16,5 @@ public class CheckoutFailedException extends RuntimeException {
     public CheckoutFailedException(String msg) {
         super(msg);
     }
-    
+
 }

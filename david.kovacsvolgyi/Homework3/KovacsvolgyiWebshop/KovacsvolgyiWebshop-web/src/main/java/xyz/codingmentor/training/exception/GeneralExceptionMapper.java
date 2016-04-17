@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.Exception;
+package xyz.codingmentor.training.exception;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +20,7 @@ public class GeneralExceptionMapper implements ExceptionMapper<Throwable> {
 
     @Override
     public Response toResponse(Throwable throwable) {
-        logger.log(Level.SEVERE, "General Exception"+throwable.getMessage(), throwable);
+        logger.log(Level.SEVERE, "General Exception" + throwable.getMessage(), throwable);
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(new ErrorDTO(throwable.getMessage() + " - " + throwable.getCause())).type(MediaType.APPLICATION_JSON).build();
     }
 }

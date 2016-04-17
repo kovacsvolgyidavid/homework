@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.Exception;
+package xyz.codingmentor.training.exception;
 
 /**
  *
@@ -9,13 +9,12 @@ public class ErrorDTO {
     private String errorMessage;
 
     public ErrorDTO() {
+        //contructor without param for mapping reasons.
     }
 
     public ErrorDTO(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-    
-    
 
     public String getErrorMessage() {
         return errorMessage;
@@ -24,6 +23,5 @@ public class ErrorDTO {
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-    
-    
+
 }

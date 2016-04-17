@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.RESTServices;
+package xyz.codingmentor.training.restservice;
 
 import xyz.codingmentor.training.dtos.MobileDTO;
 import xyz.codingmentor.training.dtos.UserDTO;
@@ -32,7 +32,7 @@ public class CartRESTService implements Serializable {
 
     private CartService cart;
     @Inject
-    private InventoryService inventory;
+    private transient InventoryService inventory;
 
     @POST
     @Path("/")
@@ -68,7 +68,7 @@ public class CartRESTService implements Serializable {
 
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
-            user=(UserDTO) userObject;
+            user = (UserDTO) userObject;
             return cart.getCart(user);
         } else {
             throw new IllegalArgumentException("Please log in");
@@ -79,7 +79,7 @@ public class CartRESTService implements Serializable {
     @GET
     @Path("/checkout")
     @Produces("application/json")
-    public String checkout(@Context HttpServletRequest request) {//TODO valami itt nem jó
+    public String checkout(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
         Object userObject = session.getAttribute("user");
 

@@ -1,5 +1,6 @@
 package xyz.codingmentor.training.dtos;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -11,7 +12,7 @@ import xyz.codingmentor.training.annotation.Validate;
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Validate
-public class MobileDTO {
+public class MobileDTO implements Serializable {
 
     @Pattern(regexp = "[a-z0-9-]{36}")
     String id;
@@ -34,6 +35,7 @@ public class MobileDTO {
     }
 
     public MobileDTO() {
+        //For mapping reasons
     }
 
     public String getId() {

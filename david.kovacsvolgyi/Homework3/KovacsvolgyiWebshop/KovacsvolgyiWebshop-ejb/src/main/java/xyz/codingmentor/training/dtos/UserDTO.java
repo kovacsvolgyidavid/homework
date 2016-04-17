@@ -1,5 +1,6 @@
 package xyz.codingmentor.training.dtos;
 
+import java.io.Serializable;
 import xyz.codingmentor.training.validation.OldEnough;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import xyz.codingmentor.training.annotation.Validate;
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Validate
-public class UserDTO {
+public class UserDTO implements Serializable {
 
     @Pattern(regexp = "....*")
     @NotNull
@@ -33,6 +34,7 @@ public class UserDTO {
     List<MobileDTO> cart = new ArrayList<>();
 
     public UserDTO() {
+        //For mapping reasons
     }
 
     public UserDTO(String username, String password, String firstname, String lastname, LocalDate dateOfBirth, LocalDate registrationDate, boolean admin) {

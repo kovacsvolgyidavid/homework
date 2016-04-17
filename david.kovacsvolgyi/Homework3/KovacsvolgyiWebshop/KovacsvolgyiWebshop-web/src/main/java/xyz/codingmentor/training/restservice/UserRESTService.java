@@ -1,13 +1,10 @@
-package xyz.codingmentor.training.RESTServices;
+package xyz.codingmentor.training.restservice;
 
-import xyz.codingmentor.training.Exception.AlreadyLoggedInException;
+import xyz.codingmentor.training.exception.AlreadyLoggedInException;
 import java.io.Serializable;
 import xyz.codingmentor.training.dtos.UserDTO;
 import xyz.codingmentor.training.services.UserManagmentService;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.interceptor.ExcludeClassInterceptors;
 import javax.interceptor.Interceptors;
@@ -30,10 +27,11 @@ import xyz.codingmentor.training.interceptor.ValidatorInterceptor;
 @Path("/user")
 @Interceptors(ValidatorInterceptor.class)
 public class UserRESTService implements Serializable {
+
+    private IllegalArgumentException pleaseLogIn = new IllegalArgumentException("Please log in.");
+    private IllegalArgumentException notAnAdmin = new IllegalArgumentException("You are not an admin.");
     @Inject
-    Conversation conversation;
-    @EJB
-    UserManagmentService userManager;
+    private transient UserManagmentService userManager;
 
     @GET
     @Path("/")
@@ -47,13 +45,13 @@ public class UserRESTService implements Serializable {
             user = (UserDTO) userObject;
 
         } else {
-            throw new IllegalArgumentException("Please log in");
+            throw pleaseLogIn;
         }
         if (user.isAdmin()) {
 
             return userManager.getUsers();
         } else {
-            throw new IllegalArgumentException("You are not an admin");
+            throw notAnAdmin;
         }
     }
 
@@ -69,13 +67,13 @@ public class UserRESTService implements Serializable {
             user = (UserDTO) userObject;
 
         } else {
-            throw new IllegalArgumentException("Please log in");
+            throw pleaseLogIn;
         }
         if (user.isAdmin()) {
 
             return userManager.getUser(username);
         } else {
-            throw new IllegalArgumentException("You are not an admin");
+            throw notAnAdmin;
         }
 
     }
@@ -92,13 +90,13 @@ public class UserRESTService implements Serializable {
             user = (UserDTO) userObject;
 
         } else {
-            throw new IllegalArgumentException("Please log in");
+            throw pleaseLogIn;
         }
         if (user.isAdmin()) {
 
             return userManager.removeUser(userManager.getUser(username));
         } else {
-            throw new IllegalArgumentException("You are not an admin");
+            throw notAnAdmin;
         }
 
     }
@@ -116,12 +114,12 @@ public class UserRESTService implements Serializable {
             user = (UserDTO) userObject;
 
         } else {
-            throw new IllegalArgumentException("Please log in");
+            throw pleaseLogIn;
         }
         if (user.isAdmin()) {
             return userManager.addUser(addedUser);
         } else {
-            throw new IllegalArgumentException("You are not an admin");
+            throw notAnAdmin;
         }
 
     }
@@ -139,13 +137,13 @@ public class UserRESTService implements Serializable {
             user = (UserDTO) userObject;
 
         } else {
-            throw new IllegalArgumentException("Please log in");
+            throw pleaseLogIn;
         }
         if (user.isAdmin()) {
 
             return userManager.editUser(newUser, userManager.getUser(oldUsername));
         } else {
-            throw new IllegalArgumentException("You are not an admin");
+            throw notAnAdmin;
         }
 
     }
@@ -155,10 +153,10 @@ public class UserRESTService implements Serializable {
     @Path("/login")
     @ExcludeClassInterceptors
     public boolean login(@Context HttpServletRequest request, UserDTO userJ) {
-        
+
         HttpSession session = request.getSession(true);
         Object objectUser = session.getAttribute("user");
-        if(objectUser != null && objectUser instanceof UserDTO){
+        if (objectUser != null && objectUser instanceof UserDTO) {
             throw new AlreadyLoggedInException("You are already logged in");
         }
         UserDTO user = userManager.getUser(userJ.getUsername());
@@ -168,7 +166,6 @@ public class UserRESTService implements Serializable {
         if (user.getPassword().equals(userJ.getPassword())) {
             session.setMaxInactiveInterval(20000);
             session.setAttribute("user", user);
-            
 
             return true;
         } else {
@@ -185,7 +182,7 @@ public class UserRESTService implements Serializable {
         Object objectUser = session.getAttribute("user");
 
         if (objectUser != null && objectUser instanceof UserDTO) {
-           
+
             session.invalidate();
             return true;
         }
