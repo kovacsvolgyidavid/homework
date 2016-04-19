@@ -14,7 +14,7 @@ import xyz.codingmentor.training.annotation.Validate;
 @Validate
 public class MobileDTO implements Serializable {
 
-    @Pattern(regexp = "[a-z0-9-]{36}")
+    @Pattern(regexp = "[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}")
     private String id;
     @NotNull
     private String type;

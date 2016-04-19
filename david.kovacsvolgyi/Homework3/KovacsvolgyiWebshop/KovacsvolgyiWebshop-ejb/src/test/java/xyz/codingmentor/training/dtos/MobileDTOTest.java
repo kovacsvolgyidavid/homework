@@ -1,7 +1,7 @@
 package xyz.codingmentor.training.dtos;
 
-import xyz.codingmentor.training.dtos.MobileDTO;
 import java.util.Set;
+import java.util.UUID;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -33,7 +33,7 @@ public class MobileDTOTest {
 
     @Test
     public void uuidPositive() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
@@ -42,7 +42,7 @@ public class MobileDTOTest {
 
     @Test
     public void typePositive() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
@@ -50,7 +50,7 @@ public class MobileDTOTest {
 
     @Test
     public void manufactorerPositive() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
@@ -58,7 +58,7 @@ public class MobileDTOTest {
 
     @Test
     public void pricePositive() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 1, 0);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", 1, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
@@ -66,7 +66,7 @@ public class MobileDTOTest {
 
     @Test
     public void piecesPositive() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
@@ -78,59 +78,67 @@ public class MobileDTOTest {
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
-        Assert.assertEquals("", violations.iterator().next().getMessage());
-        Assert.assertEquals("dummyEmail", violations.iterator().next().getInvalidValue());
-        Assert.assertEquals("{Email.message}", violations.iterator().next().getMessageTemplate());
+        Assert.assertEquals("meg kell felelnie a \"[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-"
+                + "[a-z0-9]{4}-[a-z0-9]{12}\" reguláris kifejezésnek", violations.iterator().next().getMessage());
+        Assert.assertEquals("BadId", violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.Pattern.message}", violations.iterator().next().getMessageTemplate());
     }
-    @Test
-    public void uuidNegative2() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcde)", "Z7", "Samsung", 100, 30);
-        Set<ConstraintViolation<MobileDTO>> violations;
-        violations = validator.validate(mobileTest);
-        Assert.assertEquals(1, violations.size());
-    }
+    
 
 
     @Test
     public void typeNegative() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", null, "Samsung", 100, 30);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), null, "Samsung", 100, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("nem lehet null-érték", violations.iterator().next().getMessage());
+        Assert.assertEquals(null, violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.NotNull.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
     public void manufacturerNegative() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", null, 100, 30);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", null, 100, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("nem lehet null-érték", violations.iterator().next().getMessage());
+        Assert.assertEquals(null, violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.NotNull.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
     public void priceNegative1() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 0, 30);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", 0, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("nagyobb vagy egyenlő kell legyen mint 1", violations.iterator().next().getMessage());
+        Assert.assertEquals(0, violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.Min.message}", violations.iterator().next().getMessageTemplate());
         
     }
     @Test
     public void priceNegative2() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", -2, 30);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", -2, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("nagyobb vagy egyenlő kell legyen mint 1", violations.iterator().next().getMessage());
+        Assert.assertEquals(-2, violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.Min.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
     public void pieceNegative() {
-        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 1345, -1);
+        MobileDTO mobileTest = new MobileDTO(UUID.randomUUID().toString(), "Z7", "Samsung", 1345, -1);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
-        mobileTest.setPrice(-2);
-        Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("nagyobb vagy egyenlő kell legyen mint 0", violations.iterator().next().getMessage());
+        Assert.assertEquals(-1, violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.Min.message}", violations.iterator().next().getMessageTemplate());
     }
 
 }

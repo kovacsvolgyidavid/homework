@@ -15,7 +15,7 @@ import javax.validation.Payload;
 @Target({ElementType.TYPE})
 @Retention(RUNTIME)
 public @interface OldEnough {
-    String message() default "OldEnough to registrate";
+    String message() default "{OldEnough.message}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

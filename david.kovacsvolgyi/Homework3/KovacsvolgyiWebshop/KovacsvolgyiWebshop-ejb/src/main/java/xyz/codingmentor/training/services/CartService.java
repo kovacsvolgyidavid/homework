@@ -9,6 +9,7 @@ import javax.ejb.Stateful;
 import javax.ejb.StatefulTimeout;
 import javax.inject.Inject;
 import xyz.codingmentor.training.exceptions.SoldOutException;
+import xyz.codingmentor.training.exceptions.CheckoutFailedException;
 
 /**
  *
@@ -37,9 +38,9 @@ public class CartService implements Serializable {
         try {
             fullPrice = user.getCart().stream().map(mobile
                     -> inventory.buyMobile(mobile)).reduce(fullPrice, Integer::sum);
-        } catch (SoldOutException sex) {
+        } catch (SoldOutException sox) {
             user.deleteCart();
-            throw sex;
+            throw new CheckoutFailedException(sox.getMessage()+ "User cart has been deleted");
         }
         user.deleteCart();
         return fullPrice;

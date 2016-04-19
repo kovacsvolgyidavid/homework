@@ -1,6 +1,5 @@
 package xyz.codingmentor.training.dtos;
 
-import xyz.codingmentor.training.dtos.UserDTO;
 import java.time.LocalDate;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -42,13 +41,20 @@ public class UserDTOTest {
     }
 
     @Test
-    public void passwordPositive() {
+    public void passwordPositive1() {
         UserDTO userTest = new UserDTO("proba", "GoodPassword1", "John", ""
                 + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(0, violations.size());
-        userTest.setPassword("GoodPasswordWithSpecialChar.=+<>.,");
+    }
+
+    @Test
+    public void passwordPositive2() {
+        UserDTO userTest = new UserDTO("proba", "GoodPasswordWithSpecialChar.=+<>.,", "John", ""
+                + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
+        Set<ConstraintViolation<UserDTO>> violations;
+        violations = validator.validate(userTest);
         Assert.assertEquals(0, violations.size());
     }
 
@@ -68,19 +74,49 @@ public class UserDTOTest {
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("{OldEnough.message}", violations.iterator().next().getMessage());
+        Assert.assertEquals(userTest, violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{OldEnough.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
-    public void passwordNegative() {
+    public void passwordNegative1() {
+        UserDTO userTest = new UserDTO("proba", "GbS2", "John", ""
+                + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);//has all the char needed, but too short
+        Set<ConstraintViolation<UserDTO>> violations;
+        violations = validator.validate(userTest);
+        Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("meg kell felelnie a \"(?=.*[0-9=+<>.,])(?=.*[a-z])"
+                + "(?=.*[A-Z]).{6,}$\" reguláris kifejezésnek", violations.iterator().next().getMessage());
+        Assert.assertEquals("GbS2", violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.Pattern.message}", violations.iterator().next().getMessageTemplate());
+
+    }
+
+    @Test
+    public void passwordNegative2() {
         UserDTO userTest = new UserDTO("proba", "Dummypassword", "John", ""
                 + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(1, violations.size());
-        userTest.setPassword("verybadpassword2.");
+        Assert.assertEquals("meg kell felelnie a \"(?=.*[0-9=+<>.,])"
+                + "(?=.*[a-z])(?=.*[A-Z]).{6,}$\" reguláris kifejezésnek", violations.iterator().next().getMessage());
+        Assert.assertEquals("Dummypassword", violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.Pattern.message}", violations.iterator().next().getMessageTemplate());
+    }
+
+    @Test
+    public void passwordNegative3() {
+        UserDTO userTest = new UserDTO("proba", "verybadpassword2.", "John", ""
+                + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
+        Set<ConstraintViolation<UserDTO>> violations;
+        violations = validator.validate(userTest);
         Assert.assertEquals(1, violations.size());
-        userTest.setPassword("GbS2");//has all the char needed, but too short
-        Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("meg kell felelnie a \"(?=.*[0-9=+<>.,])"
+                + "(?=.*[a-z])(?=.*[A-Z]).{6,}$\" reguláris kifejezésnek", violations.iterator().next().getMessage());
+        Assert.assertEquals("verybadpassword2.", violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.Pattern.message}", violations.iterator().next().getMessageTemplate());
     }
 
     @Test
@@ -90,6 +126,9 @@ public class UserDTOTest {
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(1, violations.size());
+        Assert.assertEquals("nem lehet null-érték", violations.iterator().next().getMessage());
+        Assert.assertEquals(null, violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{javax.validation.constraints.NotNull.message}", violations.iterator().next().getMessageTemplate());
     }
 
 }
