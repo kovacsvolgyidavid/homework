@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.exception;
+package xyz.codingmentor.training.exceptions;
 
 /**
  *

@@ -1,4 +1,4 @@
-package xyz.codingmentor.training.exception;
+package xyz.codingmentor.training.exceptions;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

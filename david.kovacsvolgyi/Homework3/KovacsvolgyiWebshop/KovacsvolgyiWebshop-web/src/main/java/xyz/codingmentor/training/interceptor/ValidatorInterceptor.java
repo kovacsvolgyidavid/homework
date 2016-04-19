@@ -9,7 +9,7 @@ import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import xyz.codingmentor.training.exception.ValidationException;
+import xyz.codingmentor.training.exceptions.ValidationException;
 import java.io.Serializable;
 import xyz.codingmentor.training.annotation.Validate;
 

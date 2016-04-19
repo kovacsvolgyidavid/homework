@@ -1,6 +1,6 @@
 package xyz.codingmentor.training.restservice;
 
-import xyz.codingmentor.training.exception.AlreadyLoggedInException;
+import xyz.codingmentor.training.exceptions.AlreadyLoggedInException;
 import java.io.Serializable;
 import xyz.codingmentor.training.dtos.UserDTO;
 import xyz.codingmentor.training.services.UserManagmentService;

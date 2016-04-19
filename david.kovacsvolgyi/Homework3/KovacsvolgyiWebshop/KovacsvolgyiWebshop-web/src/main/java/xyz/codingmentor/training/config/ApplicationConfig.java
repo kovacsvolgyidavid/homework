@@ -8,8 +8,8 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-import xyz.codingmentor.training.exception.GeneralExceptionMapper;
-import xyz.codingmentor.training.exception.ValidationExceptionMapper;
+import xyz.codingmentor.training.exceptions.GeneralExceptionMapper;
+import xyz.codingmentor.training.exceptions.ValidationExceptionMapper;
 import xyz.codingmentor.training.interceptor.ValidatorInterceptor;
 
 /**
