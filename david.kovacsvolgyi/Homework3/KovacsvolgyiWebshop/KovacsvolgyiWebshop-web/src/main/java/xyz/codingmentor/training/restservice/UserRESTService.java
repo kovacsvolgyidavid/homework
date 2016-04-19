@@ -28,165 +28,135 @@ import xyz.codingmentor.training.interceptor.ValidatorInterceptor;
 @Interceptors(ValidatorInterceptor.class)
 public class UserRESTService implements Serializable {
 
-    private IllegalArgumentException pleaseLogIn = new IllegalArgumentException("Please log in.");
-    private IllegalArgumentException notAnAdmin = new IllegalArgumentException("You are not an admin.");
     @Inject
     private transient UserManagmentService userManager;
-
+    private static final String USER_ATRIBUTE="user";
+    
     @GET
     @Path("/")
     public List<UserDTO> getUsers(@Context HttpServletRequest request) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject != null && userObject instanceof UserDTO) {
             user = (UserDTO) userObject;
-
         } else {
-            throw pleaseLogIn;
+            throw new IllegalArgumentException("Please log in.");
         }
         if (user.isAdmin()) {
-
             return userManager.getUsers();
         } else {
-            throw notAnAdmin;
+            throw new IllegalArgumentException("You are not an admin.");
         }
     }
 
     @GET
     @Path("/{username}")
     public UserDTO getUser(@Context HttpServletRequest request, @PathParam("username") String username) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
             user = (UserDTO) userObject;
-
         } else {
-            throw pleaseLogIn;
+            throw new IllegalArgumentException("Please log in.");
         }
         if (user.isAdmin()) {
-
             return userManager.getUser(username);
         } else {
-            throw notAnAdmin;
+            throw new IllegalArgumentException("You are not an admin.");
         }
-
     }
 
     @DELETE
     @Path("/{username}")
     public UserDTO deleteUser(@Context HttpServletRequest request, @PathParam("username") String username) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
             user = (UserDTO) userObject;
-
         } else {
-            throw pleaseLogIn;
+            throw new IllegalArgumentException("Please log in.");
         }
         if (user.isAdmin()) {
-
             return userManager.removeUser(userManager.getUser(username));
         } else {
-            throw notAnAdmin;
+            throw new IllegalArgumentException("You are not an admin.");
         }
-
     }
 
     @POST
     @Path("/")
     @Consumes("application/json")
     public UserDTO addUser(@Context HttpServletRequest request, UserDTO addedUser) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
             user = (UserDTO) userObject;
-
         } else {
-            throw pleaseLogIn;
+            throw new IllegalArgumentException("Please log in.");
         }
         if (user.isAdmin()) {
             return userManager.addUser(addedUser);
         } else {
-            throw notAnAdmin;
+            throw new IllegalArgumentException("You are not an admin.");
         }
-
     }
 
     @PUT
     @Path("/{username}")
     @Consumes("application/json")
     public UserDTO editUser(@Context HttpServletRequest request, @PathParam("username") String oldUsername, UserDTO newUser) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
             user = (UserDTO) userObject;
-
         } else {
-            throw pleaseLogIn;
+            throw new IllegalArgumentException("Please log in.");
         }
         if (user.isAdmin()) {
-
             return userManager.editUser(newUser, userManager.getUser(oldUsername));
         } else {
-            throw notAnAdmin;
+            throw new IllegalArgumentException("You are not an admin.");
         }
-
     }
 
     @POST
     @Consumes("application/json")
     @Path("/login")
     @ExcludeClassInterceptors
-    public boolean login(@Context HttpServletRequest request, UserDTO userJ) {
-
+    public boolean login(@Context HttpServletRequest request, UserDTO userLogin) {
         HttpSession session = request.getSession(true);
-        Object objectUser = session.getAttribute("user");
+        Object objectUser = session.getAttribute(USER_ATRIBUTE);
         if (objectUser != null && objectUser instanceof UserDTO) {
             throw new AlreadyLoggedInException("You are already logged in");
         }
-        UserDTO user = userManager.getUser(userJ.getUsername());
+        UserDTO user = userManager.getUser(userLogin.getUsername());
         if (user == null) {
             throw new IllegalArgumentException("No such username");
         }
-        if (user.getPassword().equals(userJ.getPassword())) {
+        if (user.getPassword().equals(userLogin.getPassword())) {
             session.setMaxInactiveInterval(20000);
-            session.setAttribute("user", user);
-
+            session.setAttribute(USER_ATRIBUTE, user);
             return true;
         } else {
             session.invalidate();
             throw new IllegalArgumentException("wrong password");
         }
-
     }
 
     @Path("/logout")
     @GET
     public boolean logout(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Object objectUser = session.getAttribute("user");
-
+        Object objectUser = session.getAttribute(USER_ATRIBUTE);
         if (objectUser != null && objectUser instanceof UserDTO) {
-
             session.invalidate();
             return true;
         }
         throw new IllegalArgumentException("First login to logout");
     }
-
 }

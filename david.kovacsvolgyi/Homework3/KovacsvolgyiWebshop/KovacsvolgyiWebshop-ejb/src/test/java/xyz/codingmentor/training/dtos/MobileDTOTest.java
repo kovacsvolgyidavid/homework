@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package DTOTests;
+package xyz.codingmentor.training.dtos;
 
 import xyz.codingmentor.training.dtos.MobileDTO;
 import java.util.Set;
@@ -24,13 +19,11 @@ public class MobileDTOTest {
 
     private static ValidatorFactory vf;
     private static Validator validator;
-    private static MobileDTO mobileTest;
 
     @BeforeClass
     public static void init() {
         vf = Validation.buildDefaultValidatorFactory();
         validator = vf.getValidator();
-
     }
 
     @AfterClass
@@ -40,8 +33,7 @@ public class MobileDTOTest {
 
     @Test
     public void uuidPositive() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
-
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
@@ -50,86 +42,90 @@ public class MobileDTOTest {
 
     @Test
     public void typePositive() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
-
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
-
     }
 
     @Test
     public void manufactorerPositive() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
-
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
-
     }
 
     @Test
     public void pricePositive() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 1, 0);
-
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 1, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
-
     }
 
     @Test
     public void piecesPositive() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
-
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 100, 0);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(0, violations.size());
-
     }
 
     @Test
-    public void uuidNegative() {
-        mobileTest = new MobileDTO("BadId", "Z7", "Samsung", 100, 30);
-
+    public void uuidNegative1() {//TODO
+        MobileDTO mobileTest = new MobileDTO("BadId", "Z7", "Samsung", 100, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
-        mobileTest.setId("123456789012345678901234567890abcde)");
+        Assert.assertEquals("", violations.iterator().next().getMessage());
+        Assert.assertEquals("dummyEmail", violations.iterator().next().getInvalidValue());
+        Assert.assertEquals("{Email.message}", violations.iterator().next().getMessageTemplate());
+    }
+    @Test
+    public void uuidNegative2() {
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcde)", "Z7", "Samsung", 100, 30);
+        Set<ConstraintViolation<MobileDTO>> violations;
+        violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
     }
+
 
     @Test
     public void typeNegative() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", null, "Samsung", 100, 30);
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", null, "Samsung", 100, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
-
     }
 
     @Test
     public void manufacturerNegative() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", null, 100, 30);
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", null, 100, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
-
     }
 
     @Test
-    public void priceNegative() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 0, 30);
+    public void priceNegative1() {
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 0, 30);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
-        mobileTest.setPrice(-2);
+        
+    }
+    @Test
+    public void priceNegative2() {
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", -2, 30);
+        Set<ConstraintViolation<MobileDTO>> violations;
+        violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());
     }
 
     @Test
     public void pieceNegative() {
-        mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 1345, -1);
+        MobileDTO mobileTest = new MobileDTO("123456789012345678901234567890abcdef", "Z7", "Samsung", 1345, -1);
         Set<ConstraintViolation<MobileDTO>> violations;
         violations = validator.validate(mobileTest);
         Assert.assertEquals(1, violations.size());

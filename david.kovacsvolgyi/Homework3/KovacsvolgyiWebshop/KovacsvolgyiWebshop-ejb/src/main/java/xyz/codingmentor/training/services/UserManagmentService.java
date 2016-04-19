@@ -27,7 +27,6 @@ public class UserManagmentService {
                 "Kovacsvolgyi", LocalDate.of(1990, 9, 5), LocalDate.now(), true);
         UserDTO defaultUser = new UserDTO("user", "user", "Gergo",
                 "Somfai", LocalDate.of(1991, 10, 5), LocalDate.now(), false);
-
         users.put(admin.getUsername(), admin);
         users.put(defaultUser.getUsername(), defaultUser);
     }
@@ -43,11 +42,8 @@ public class UserManagmentService {
 
     public UserDTO removeUser(UserDTO user) {
         if (!users.containsKey(user.getUsername())) {
-
             throw new IllegalArgumentException("We don't have this user");
-
         }
-
         return users.remove(user.getUsername());
     }
 
@@ -56,12 +52,9 @@ public class UserManagmentService {
             throw new IllegalArgumentException("You try to manipulate wrong user");
         } else if (users.replace(oldUser.getUsername(), oldUser, newUser)) {
             return oldUser;
-
         } else {
             throw new IllegalArgumentException("UserEntry ERROR: oldUser is not the same we had before with this username");
-
         }
-
     }
 
     public UserDTO getUser(String username) {
@@ -69,7 +62,6 @@ public class UserManagmentService {
             throw new IllegalArgumentException("There is no user with this name");
         }
         return users.get(username);
-
     }
 
     public List<UserDTO> getUsers() {

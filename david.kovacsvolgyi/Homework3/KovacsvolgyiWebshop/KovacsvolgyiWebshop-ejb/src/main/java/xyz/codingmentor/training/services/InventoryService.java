@@ -29,11 +29,9 @@ public class InventoryService {
         mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad1", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad1", "Lumia45", "Nokia", 500, 12));
         mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad2", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad2", "XperiaZ4", "Sony", 1, 5));
         mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad3", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad3", "10s", "iPhone", 99999999, 0));
-
     }
 
     public MobileDTO addMobile(MobileDTO mobil) {
-
         if (mobiles.get(mobil.getId()) != null && mobiles.get(mobil.getId()).equals(mobil)) {
             throw new IllegalArgumentException("We have this mobile in store, already.");
         }
@@ -47,19 +45,17 @@ public class InventoryService {
             throw new IllegalArgumentException("we don't have this kind of mobile");
         }
         MobileDTO listedMobile = mobiles.get(mobil.getId());
-
         if (listedMobile.getPiece() <= 0) {
             throw new SoldOutException("We don't have any of this mobile on stock :(");
         }
         listedMobile.setPiece(listedMobile.getPiece() - 1);
         return listedMobile.getPrice();
-
     }
 
     public List<MobileDTO> getMobilesList() {
         List<MobileDTO> mobileList = new ArrayList<>();
         Set<MobileDTO> mobileSet = new HashSet<>();
-        mobiles.keySet().stream().forEach((id)
+        mobiles.keySet().stream().forEach(id
                 -> mobileSet.add(mobiles.get(id)));
         mobileList.addAll(mobileSet);
         return mobileList;

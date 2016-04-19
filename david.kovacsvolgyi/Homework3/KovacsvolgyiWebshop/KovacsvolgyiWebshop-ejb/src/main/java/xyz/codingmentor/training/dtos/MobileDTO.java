@@ -15,18 +15,17 @@ import xyz.codingmentor.training.annotation.Validate;
 public class MobileDTO implements Serializable {
 
     @Pattern(regexp = "[a-z0-9-]{36}")
-    String id;
+    private String id;
     @NotNull
-    String type;
+    private String type;
     @NotNull
-    String manufacturer;
+    private String manufacturer;
     @Min(1)
-    int price;
+    private int price;
     @Min(0)
-    int piece;
+    private int piece;
 
     public MobileDTO(String id, String type, String manufacturer, int price, int piece) {
-
         this.id = id;
         this.type = type;
         this.manufacturer = manufacturer;

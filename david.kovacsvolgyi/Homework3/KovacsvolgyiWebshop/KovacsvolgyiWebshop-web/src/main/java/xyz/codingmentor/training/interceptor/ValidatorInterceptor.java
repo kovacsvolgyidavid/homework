@@ -21,14 +21,13 @@ import xyz.codingmentor.training.annotation.Validate;
 public class ValidatorInterceptor implements Serializable {
 
     @Inject
-    private transient Validator validator;
+    private Validator validator;
 
     @AroundInvoke
     public Object logMethod(InvocationContext ic) throws Exception {
+
         validateParameters(ic.getParameters());
-
         return ic.proceed();
-
     }
 
     private void validateParameters(Object[] parameters) {

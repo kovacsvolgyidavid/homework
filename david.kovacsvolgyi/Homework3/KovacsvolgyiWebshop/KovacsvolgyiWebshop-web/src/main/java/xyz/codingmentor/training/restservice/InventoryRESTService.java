@@ -27,6 +27,7 @@ public class InventoryRESTService {
 
     @Inject
     private transient InventoryService inventory;
+    private static final String USER_ATRIBUTE="user";
 
     @POST
     @Path("/")
@@ -34,14 +35,11 @@ public class InventoryRESTService {
     @Produces("application/json")
     @ExcludeClassInterceptors
     public MobileDTO addMobile(@Context HttpServletRequest request, MobileDTO mobile) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
             user = (UserDTO) userObject;
-
         } else {
             throw new IllegalArgumentException("Please log in");
         }
@@ -50,21 +48,16 @@ public class InventoryRESTService {
         } else {
             throw new IllegalArgumentException("You are not an admin");
         }
-
     }
 
     @GET
     @Path("/")
     public List<MobileDTO> getMobiles(@Context HttpServletRequest request) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         if (userObject == null && !(userObject instanceof UserDTO)) {
             throw new IllegalArgumentException("Please log in");
-
         }
         return inventory.getMobilesList();
-
     }
 }

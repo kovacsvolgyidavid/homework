@@ -29,21 +29,18 @@ import xyz.codingmentor.training.services.InventoryService;
 public class CartRESTService implements Serializable {
 
     @Inject
-
     private CartService cart;
     @Inject
     private transient InventoryService inventory;
+    private static final String USER_ATRIBUTE="user";
 
     @POST
     @Path("/")
     @Consumes("application/json")
     @Produces("application/json")
-
     public MobileDTO addToCart(@Context HttpServletRequest request, MobileDTO mobile) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
             if (!inventory.isItAMobile(mobile)) {
@@ -54,18 +51,14 @@ public class CartRESTService implements Serializable {
         } else {
             throw new IllegalArgumentException("Please log in");
         }
-
     }
 
     @GET
     @Path("/")
     @Produces("application/json")
-
     public List<MobileDTO> getCart(@Context HttpServletRequest request) {
-
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject instanceof UserDTO && userObject != null) {
             user = (UserDTO) userObject;
@@ -73,7 +66,6 @@ public class CartRESTService implements Serializable {
         } else {
             throw new IllegalArgumentException("Please log in");
         }
-
     }
 
     @GET
@@ -81,16 +73,13 @@ public class CartRESTService implements Serializable {
     @Produces("application/json")
     public String checkout(@Context HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Object userObject = session.getAttribute("user");
-
+        Object userObject = session.getAttribute(USER_ATRIBUTE);
         UserDTO user;
         if (userObject != null && userObject instanceof UserDTO) {
             user = (UserDTO) userObject;
-
             return cart.checkout(user).toString();
         } else {
             throw new IllegalArgumentException("Please login");
         }
-
     }
 }

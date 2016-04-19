@@ -3,12 +3,13 @@ package xyz.codingmentor.training.validation;
 import java.time.LocalDate;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import xyz.codingmentor.training.dtos.UserDTO;
 
 /**
  *
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
-public class OldEnoughValidator implements ConstraintValidator<OldEnough, LocalDate> {
+public class OldEnoughValidator implements ConstraintValidator<OldEnough, UserDTO> {
 
     @Override
     public void initialize(OldEnough constraintAnnotation) {
@@ -16,11 +17,16 @@ public class OldEnoughValidator implements ConstraintValidator<OldEnough, LocalD
     }
 
     @Override
-    public boolean isValid(LocalDate value, ConstraintValidatorContext context) {
-        if (value == null) {
-            return false;
+    public boolean isValid(UserDTO user, ConstraintValidatorContext context) { 
+        if (user.getDateOfBirth() == null) {
+            return true;
         }
-        return value.isBefore(LocalDate.now());
+        if(user.getDateOfBirth().isBefore(user.getRegistrationDate())){
+        return user.getDateOfBirth().isBefore(LocalDate.now());
+        }
+        else{
+        return false;
+        }
     }
 
 }

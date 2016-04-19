@@ -5,7 +5,6 @@ import xyz.codingmentor.training.dtos.UserDTO;
 import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 import javax.ejb.StatefulTimeout;
 import javax.inject.Inject;
@@ -17,7 +16,6 @@ import xyz.codingmentor.training.exceptions.SoldOutException;
  */
 @Stateful
 @StatefulTimeout(value = 500, unit = TimeUnit.SECONDS)
-@LocalBean
 public class CartService implements Serializable {
 
     @Inject
@@ -26,11 +24,8 @@ public class CartService implements Serializable {
     private transient UserManagmentService userService;
 
     public MobileDTO addToCart(UserDTO user, MobileDTO mobile) {
-
         user.addCart(mobile);
-
         return mobile;
-
     }
 
     public List<MobileDTO> getCart(UserDTO user) {
@@ -45,11 +40,8 @@ public class CartService implements Serializable {
         } catch (SoldOutException sex) {
             user.deleteCart();
             throw sex;
-
         }
         user.deleteCart();
-
         return fullPrice;
-
     }
 }

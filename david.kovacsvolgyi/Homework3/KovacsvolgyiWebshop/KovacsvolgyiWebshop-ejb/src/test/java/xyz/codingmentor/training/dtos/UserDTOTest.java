@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package DTOTests;
+package xyz.codingmentor.training.dtos;
 
 import xyz.codingmentor.training.dtos.UserDTO;
 import java.time.LocalDate;
@@ -25,13 +20,11 @@ public class UserDTOTest {
 
     private static ValidatorFactory vf;
     private static Validator validator;
-    private static UserDTO userTest;
 
     @BeforeClass
     public static void init() {
         vf = Validation.buildDefaultValidatorFactory();
         validator = vf.getValidator();
-
     }
 
     @AfterClass
@@ -41,20 +34,17 @@ public class UserDTOTest {
 
     @Test
     public void usernamePositive() {
-        userTest = new UserDTO("proba", "GoodPassword1", "John", ""
+        UserDTO userTest = new UserDTO("proba", "GoodPassword1", "John", ""
                 + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
-
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(0, violations.size());
-
     }
 
     @Test
     public void passwordPositive() {
-        userTest = new UserDTO("proba", "GoodPassword1", "John", ""
+        UserDTO userTest = new UserDTO("proba", "GoodPassword1", "John", ""
                 + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
-
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(0, violations.size());
@@ -64,31 +54,26 @@ public class UserDTOTest {
 
     @Test
     public void dateOfBirthPositive() {
-        userTest = new UserDTO("proba", "GoodPassword1", "John", ""
+        UserDTO userTest = new UserDTO("proba", "GoodPassword1", "John", ""
                 + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
-
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(0, violations.size());
-
     }
 
     @Test
     public void dateOfBirthNegative() {
-        userTest = new UserDTO("proba", "GoodPassword1", "John", ""
-                + "Doe", LocalDate.now().plusDays(1), LocalDate.now(), true);
-
+        UserDTO userTest = new UserDTO("proba", "GoodPassword1", "John", ""
+                + "Doe", LocalDate.now().plusDays(1), LocalDate.of(1990, 10, 12), true);
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(1, violations.size());
-
     }
 
     @Test
     public void passwordNegative() {
-        userTest = new UserDTO("proba", "Dummypassword", "John", ""
+        UserDTO userTest = new UserDTO("proba", "Dummypassword", "John", ""
                 + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
-
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(1, violations.size());
@@ -100,13 +85,11 @@ public class UserDTOTest {
 
     @Test
     public void usernameNegative() {
-        userTest = new UserDTO(null, "GoodPassword1", "John", ""
+        UserDTO userTest = new UserDTO(null, "GoodPassword1", "John", ""
                 + "Doe", LocalDate.now().minusDays(1), LocalDate.now(), true);
-
         Set<ConstraintViolation<UserDTO>> violations;
         violations = validator.validate(userTest);
         Assert.assertEquals(1, violations.size());
-
     }
 
 }

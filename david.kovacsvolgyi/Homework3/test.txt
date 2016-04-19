@@ -98,18 +98,18 @@ Post: http://localhost:8080/KovacsvolgyiWebshop-web/mobiles
 "piece": 0,
 "price": 10,
 "type": "s2i"
- }//FONTOS: ez hozzá legyen adva
+ }
  Get: http://localhost:8080/KovacsvolgyiWebshop-web/mobiles
  
  
  Post:  http://localhost:8080/KovacsvolgyiWebshop-web/cart
  {
-"id": "d29ad7de-f384-4863-aa97-126fcce974c7",
-"manufacturer": "Samsung",
+"id": "a5546f0e-c3b3-45ff-af84-87066b9e8ad3",
+"manufacturer": "iPhone",
 "piece": 0,
-"price": 10,
-"type": "s2i"
-}
+"price": 99999999,
+"type": "10s"
+ }
 Get: http://localhost:8080/KovacsvolgyiWebshop-web/cart/checkout
 
 //nyílván nem tudunk chekoutolni

@@ -26,11 +26,9 @@ public class ApplicationConfig extends Application {
         c.add(InventoryRESTService.class);
         c.add(UserRESTService.class);
         c.add(ValidatorInterceptor.class);
-
         c.add(CartRESTService.class);
         c.add(ValidationExceptionMapper.class);
         c.add(GeneralExceptionMapper.class);
-
         classes = Collections.unmodifiableSet(c);
     }
 

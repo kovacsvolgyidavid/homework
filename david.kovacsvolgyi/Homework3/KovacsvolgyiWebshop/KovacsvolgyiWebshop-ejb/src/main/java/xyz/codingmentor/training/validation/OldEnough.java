@@ -12,14 +12,10 @@ import javax.validation.Payload;
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Constraint(validatedBy = OldEnoughValidator.class)
-@Target({ElementType.FIELD})
+@Target({ElementType.TYPE})
 @Retention(RUNTIME)
 public @interface OldEnough {
-
     String message() default "OldEnough to registrate";
-
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
-
 }

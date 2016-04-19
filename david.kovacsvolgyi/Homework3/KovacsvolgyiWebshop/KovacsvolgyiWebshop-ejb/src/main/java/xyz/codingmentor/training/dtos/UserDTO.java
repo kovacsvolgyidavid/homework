@@ -16,22 +16,23 @@ import xyz.codingmentor.training.annotation.Validate;
  * @author David Kovacsvolgyi<kovacsvolgyi.david@gmail.com>
  */
 @Validate
+@OldEnough
 public class UserDTO implements Serializable {
 
     @Pattern(regexp = "....*")
     @NotNull
-    String username;
+    private String username;
     @Pattern(regexp = "(?=.*[0-9=+<>.,])(?=.*[a-z])(?=.*[A-Z]).{6,}$")
-    String password;
-    String firstname;
-    String lastname;
-    @OldEnough
+    private String password;
+    private String firstname;
+    private String lastname;
+    
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    LocalDate dateOfBirth;
+    private LocalDate dateOfBirth;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    LocalDate registrationDate;
-    boolean admin;
-    List<MobileDTO> cart = new ArrayList<>();
+    private LocalDate registrationDate;
+    private boolean admin;
+    private List<MobileDTO> cart = new ArrayList<>();
 
     public UserDTO() {
         //For mapping reasons
