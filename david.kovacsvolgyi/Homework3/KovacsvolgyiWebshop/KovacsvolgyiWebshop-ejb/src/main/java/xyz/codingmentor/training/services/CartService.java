@@ -35,13 +35,14 @@ public class CartService implements Serializable {
 
     public Integer checkout(UserDTO user) {
         Integer fullPrice = 0;
-        try {
+        for(MobileDTO mobile:user.getCart()){
+            if(mobile.getPiece()<1){
+            user.deleteCart();
+            throw new CheckoutFailedException("We don't have enough from" +mobile.getManufacturer() + mobile.getType());
+            }
+        }
             fullPrice = user.getCart().stream().map(mobile
                     -> inventory.buyMobile(mobile)).reduce(fullPrice, Integer::sum);
-        } catch (SoldOutException sox) {
-            user.deleteCart();
-            throw new CheckoutFailedException(sox.getMessage()+ "User cart has been deleted");
-        }
         user.deleteCart();
         return fullPrice;
     }

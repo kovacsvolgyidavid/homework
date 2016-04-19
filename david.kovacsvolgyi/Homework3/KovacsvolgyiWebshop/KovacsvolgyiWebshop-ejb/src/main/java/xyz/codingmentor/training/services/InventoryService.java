@@ -25,15 +25,19 @@ public class InventoryService {
 
     @PostConstruct
     private void addMobileOnStart() {
-        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad0", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad0", "3610", "Nokia", 50, 3));
-        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad1", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad1", "Lumia45", "Nokia", 500, 12));
-        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad2", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad2", "XperiaZ4", "Sony", 1, 5));
-        mobiles.put("a5546f0e-c3b3-45ff-af84-87066b9e8ad3", new MobileDTO("a5546f0e-c3b3-45ff-af84-87066b9e8ad3", "10s", "iPhone", 99999999, 0));
+        MobileDTO mobile1 = new MobileDTO(UUID.randomUUID().toString(), "Lumia45", "Nokia", 500, 12);
+        MobileDTO mobile2 = new MobileDTO(UUID.randomUUID().toString(), "3610", "Nokia", 50, 3);
+        MobileDTO mobile3 = new MobileDTO(UUID.randomUUID().toString(), "XperiaZ4", "Sony", 1, 5);
+        MobileDTO mobile4 = new MobileDTO(UUID.randomUUID().toString(), "10s", "iPhone", 99999999, 0);
+        mobiles.put(mobile1.getId(), mobile1);
+        mobiles.put(mobile2.getId(), mobile2);
+        mobiles.put(mobile3.getId(), mobile3);
+        mobiles.put(mobile4.getId(), mobile4);
     }
 
     public MobileDTO addMobile(MobileDTO mobil) {
         if (mobiles.get(mobil.getId()) != null && mobiles.get(mobil.getId()).equals(mobil)) {
-            throw new IllegalArgumentException("We have this mobile in store, already.");
+            throw new IllegalArgumentException("We have " + mobil.getManufacturer() + mobil.getType() + "in store, already.");
         }
         mobil.setId(UUID.randomUUID().toString());
         mobiles.put(mobil.getId(), mobil);
@@ -45,9 +49,6 @@ public class InventoryService {
             throw new IllegalArgumentException("we don't have this kind of mobile");
         }
         MobileDTO listedMobile = mobiles.get(mobil.getId());
-        if (listedMobile.getPiece() <= 0) {
-            throw new SoldOutException("We don't have any of this mobile on stock :(");
-        }
         listedMobile.setPiece(listedMobile.getPiece() - 1);
         return listedMobile.getPrice();
     }
