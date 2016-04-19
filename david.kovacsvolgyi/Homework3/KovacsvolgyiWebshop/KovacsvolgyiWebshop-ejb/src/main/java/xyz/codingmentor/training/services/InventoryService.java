@@ -49,6 +49,9 @@ public class InventoryService {
             throw new IllegalArgumentException("we don't have this kind of mobile");
         }
         MobileDTO listedMobile = mobiles.get(mobil.getId());
+        if (listedMobile.getPiece() <= 0) {
+            throw new SoldOutException("We don't have any of this mobile on stock :(");
+        }
         listedMobile.setPiece(listedMobile.getPiece() - 1);
         return listedMobile.getPrice();
     }
