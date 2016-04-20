@@ -11,6 +11,7 @@ public class Job implements Serializable {
     private int time;//random 1-5
 
     public Job() {
+        //For mapping reasons
     }
 
     public long getId() {
