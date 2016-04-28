@@ -2,11 +2,13 @@ package entity;
 
 import enumerated.GuestState;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,9 +25,28 @@ public class Guest implements Serializable {
     private Double money;
     @Temporal(value=TemporalType.TIMESTAMP)
     private Date enterTime;
-    private int age;//TODO: nem ezt az adatot kell tárolni hanem a születési évet
+    @Temporal(value=TemporalType.DATE)
+    private Date birthDay;
     private Boolean active;
+    @ManyToOne
+    private Machine machine;
 
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public Machine getMachine() {
+        return machine;
+    }
+
+    public void setMachine(Machine machine) {
+        this.machine = machine;
+    }
+    
     public Guest() {
     //for mapping reasons
     }
@@ -63,12 +84,13 @@ public class Guest implements Serializable {
     }
 
     public int getAge() {
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(this.birthDay);
+        int age=Calendar.getInstance().get(Calendar.YEAR)-calendar.get(Calendar.YEAR);
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
+   
 
     public Boolean getActive() {
         return active;

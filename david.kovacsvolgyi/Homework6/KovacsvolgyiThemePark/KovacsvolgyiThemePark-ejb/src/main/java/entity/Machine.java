@@ -2,9 +2,13 @@ package entity;
 
 import enumerated.MachineType;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -16,15 +20,35 @@ public class Machine implements Serializable {
     @Id@GeneratedValue
     private Long id;
     private String name;
+    @Column(name="SIZE_OF_MACHINE")
     private Double size;
     private Double ticketPrice;
     private Integer capacity;
     private MachineType machineType;
-
+    @ManyToOne
+    private ThemePark themePark;
+    @OneToMany(mappedBy = "machine")
+    private List<Guest> guests;
     public Machine() {
         //for mapping reasons
     }
 
+    public List<Guest> getGuests() {
+        return guests;
+    }
+
+    public void setGuests(List<Guest> guests) {
+        this.guests = guests;
+    }
+    
+    public ThemePark getThemePark() {
+        return themePark;
+    }
+
+    public void setThemePark(ThemePark themePark) {
+        this.themePark = themePark;
+    }
+    
     public String getName() {
         return name;
     }

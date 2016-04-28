@@ -1,9 +1,12 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -15,10 +18,12 @@ public class ThemePark implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
-    private Address adsress;
+    @OneToOne
+    private Address address;
     private Double money;
     private Double territory;
-
+    @OneToMany(mappedBy = "themePark")
+    private List<Machine> machines;
     public ThemePark() {
         //for mapping reasons
     }
@@ -32,11 +37,11 @@ public class ThemePark implements Serializable {
     }
 
     public Address getAdsress() {
-        return adsress;
+        return address;
     }
 
     public void setAdsress(Address adsress) {
-        this.adsress = adsress;
+        this.address = adsress;
     }
 
     public Double getMoney() {
