@@ -1,34 +1,32 @@
 package statistic;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import javax.annotation.Resource;
-import javax.ejb.MessageDriven;
 import javax.ejb.Singleton;
-import javax.ejb.Startup;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.Topic;
 
 /**
  *
  * @author David Kovacsvolgyi <kovacsvolgyi.david@gmail.com>
  */
 @Singleton
-@Startup
-@MessageDriven(mappedName="DzsobTopik")
-public class StaticsBean implements MessageListener{
-    private Map<Long,LocalDate> jobsInQueue=new HashMap<>();
-    private Map<Long,Double> jobsDone=new HashMap<>();
+public class StaticsBean {
 
-    @Override
-    public void onMessage(Message message) {
-        //TODO
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private final Map<Long, Calendar> jobsInQueue = new HashMap<>();
+    private final List<JobsDoneEntry> jobsDone = new ArrayList<>();
+
+    public void addMessage(Long id) {
+        if (jobsInQueue.containsKey(id)) {
+            jobsDone.add(new JobsDoneEntry(id, (double) (Calendar.getInstance().getTimeInMillis()
+                    - jobsInQueue.get(id).getTimeInMillis()) / 1000));
+        } else {
+            jobsInQueue.put(id, Calendar.getInstance());
+        }
     }
-    
-    public Map<Long,Double> getResults(){
+
+    public List<JobsDoneEntry> getResults() {
         return jobsDone;
     }
 }

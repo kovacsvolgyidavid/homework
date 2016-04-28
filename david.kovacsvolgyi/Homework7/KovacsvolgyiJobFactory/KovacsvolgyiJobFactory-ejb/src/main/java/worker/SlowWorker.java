@@ -17,16 +17,16 @@ import javax.jms.Topic;
  */
 @Singleton
 @Startup
-public class Worker {
+public class SlowWorker {
 
     @Inject
     private JMSContext jmsContext;
-    private WorkRate workrate = WorkRate.MEDIUM;
-    private static final Logger LOGGER = Logger.getLogger(Worker.class.getName());
+    private WorkRate workrate = WorkRate.SLOW;
+    private static final Logger LOGGER = Logger.getLogger(SlowWorker.class.getName());
     @Resource(lookup = "dzsobTopik")
     private Topic topic;
 
-    public Worker() {
+    public SlowWorker() {
         //For mapping reasons
     }
 
@@ -39,7 +39,7 @@ public class Worker {
             } catch (InterruptedException ex) {
                 LOGGER.log(Level.SEVERE, null, ex);
             }
-            LOGGER.log(Level.INFO, "{0} is done by Worker", job.toString());
+            LOGGER.log(Level.INFO, "{0} is done by SlowWorker", job.toString());
             jmsContext.createProducer().send(topic, job.getId());
         }
 
