@@ -1,0 +1,10 @@
+entity\Address.class
+enumerated\GuestState.class
+entity\GuestBookEntry.class
+entity\Guest.class
+enumerated\MachineType.class
+service\Ejb.class
+embededid\EntryId.class
+entity\ThemePark.class
+entity\Machine.class
+facade\EntityFacade.class
