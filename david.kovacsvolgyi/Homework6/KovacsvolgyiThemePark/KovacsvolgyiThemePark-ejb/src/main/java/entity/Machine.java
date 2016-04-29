@@ -1,13 +1,16 @@
 package entity;
 
-import enumerated.MachineType;
+import enums.MachineType;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -15,6 +18,10 @@ import javax.persistence.OneToMany;
  * @author David Kovacsvolgyi <kovacsvolgyi.david@gmail.com>
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="machine.get_buyable_machines",
+            query="select m from Machine m where m.themePark is null")
+})
 public class Machine implements Serializable {
 
     @Id@GeneratedValue
@@ -95,6 +102,59 @@ public class Machine implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 11 * hash + Objects.hashCode(this.id);
+        hash = 11 * hash + Objects.hashCode(this.name);
+        hash = 11 * hash + Objects.hashCode(this.size);
+        hash = 11 * hash + Objects.hashCode(this.ticketPrice);
+        hash = 11 * hash + Objects.hashCode(this.capacity);
+        hash = 11 * hash + Objects.hashCode(this.machineType);
+        hash = 11 * hash + Objects.hashCode(this.themePark);
+        hash = 11 * hash + Objects.hashCode(this.guests);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Machine other = (Machine) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.size, other.size)) {
+            return false;
+        }
+        if (!Objects.equals(this.ticketPrice, other.ticketPrice)) {
+            return false;
+        }
+        if (!Objects.equals(this.capacity, other.capacity)) {
+            return false;
+        }
+        if (this.machineType != other.machineType) {
+            return false;
+        }
+        if (!Objects.equals(this.themePark, other.themePark)) {
+            return false;
+        }
+        if (!Objects.equals(this.guests, other.guests)) {
+            return false;
+        }
+        return true;
     }
     
 }

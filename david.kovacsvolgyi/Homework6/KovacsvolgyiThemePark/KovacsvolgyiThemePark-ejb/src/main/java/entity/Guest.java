@@ -1,9 +1,10 @@
 package entity;
 
-import enumerated.GuestState;
+import enums.GuestState;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -98,6 +99,55 @@ public class Guest implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.state);
+        hash = 83 * hash + Objects.hashCode(this.money);
+        hash = 83 * hash + Objects.hashCode(this.enterTime);
+        hash = 83 * hash + Objects.hashCode(this.birthDay);
+        hash = 83 * hash + Objects.hashCode(this.active);
+        hash = 83 * hash + Objects.hashCode(this.machine);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Guest other = (Guest) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (this.state != other.state) {
+            return false;
+        }
+        if (!Objects.equals(this.money, other.money)) {
+            return false;
+        }
+        if (!Objects.equals(this.enterTime, other.enterTime)) {
+            return false;
+        }
+        if (!Objects.equals(this.birthDay, other.birthDay)) {
+            return false;
+        }
+        if (!Objects.equals(this.active, other.active)) {
+            return false;
+        }
+        if (!Objects.equals(this.machine, other.machine)) {
+            return false;
+        }
+        return true;
     }
     
     
