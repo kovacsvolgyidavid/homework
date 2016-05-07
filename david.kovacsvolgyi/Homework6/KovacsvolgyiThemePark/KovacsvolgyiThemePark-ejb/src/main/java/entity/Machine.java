@@ -8,10 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 /**
  *
@@ -19,23 +19,26 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="machine.get_buyable_machines",
-            query="select m from Machine m where m.themePark is null")
+    @NamedQuery(name = "machine.get_buyable_machines",
+            query = "select m from Machine m where m.themePark is null")
 })
 public class Machine implements Serializable {
 
-    @Id@GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
+    private Double price;//TODO:hashcode + tostring + iylenek
     private String name;
-    @Column(name="SIZE_OF_MACHINE")
+    @Column(name = "SIZE_OF_MACHINE")
     private Double size;
     private Double ticketPrice;
     private Integer capacity;
     private MachineType machineType;
     @ManyToOne
+    @JoinColumn(name = "THEME_PARK_FK")
     private ThemePark themePark;
-    @OneToMany(mappedBy = "machine")
-    private List<Guest> guests;
+    private transient List<Guest> guests;
+
     public Machine() {
         //for mapping reasons
     }
@@ -47,7 +50,7 @@ public class Machine implements Serializable {
     public void setGuests(List<Guest> guests) {
         this.guests = guests;
     }
-    
+
     public ThemePark getThemePark() {
         return themePark;
     }
@@ -55,7 +58,7 @@ public class Machine implements Serializable {
     public void setThemePark(ThemePark themePark) {
         this.themePark = themePark;
     }
-    
+
     public String getName() {
         return name;
     }
@@ -95,7 +98,7 @@ public class Machine implements Serializable {
     public void setMachineType(MachineType machineType) {
         this.machineType = machineType;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -155,6 +158,27 @@ public class Machine implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Machine{" + "id=" + id + ", name=" + name + ", size=" + size + ", ticketPrice=" + ticketPrice + ", capacity=" + capacity + ", machineType=" + machineType + ", themePark=" + themePark + '}';
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void decreaseCapacity() {
+        capacity--;
+    }
+
+    public void increaseCapacity() {
+        capacity++;
     }
     
 }

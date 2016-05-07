@@ -27,7 +27,6 @@ public class MachineDTO {
         ticketPrice = machine.getTicketPrice();
         capacity = machine.getCapacity();
         machineType = machine.getMachineType();
-        themePark = new ThemeParkDTO(machine.getThemePark());
         guests = new ArrayList<>();
         machine.getGuests().forEach(guest -> guests.add(new GuestDTO(guest)));
     }
@@ -99,5 +98,5 @@ public class MachineDTO {
     public void setGuests(List<GuestDTO> guests) {
         this.guests = guests;
     }
-    
+
 }

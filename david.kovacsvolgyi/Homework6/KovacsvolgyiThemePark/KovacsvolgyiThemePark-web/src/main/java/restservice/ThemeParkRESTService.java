@@ -1,13 +1,15 @@
 package restservice;
 
-import dto.ThemeParkDTO;
+import entity.Guest;
 import entity.ThemePark;
 import java.io.Serializable;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -17,7 +19,7 @@ import service.ThemeParkService;
  *
  * @author David Kovacsvolgyi <kovacsvolgyi.david@gmail.com>
  */
-@Path("/")
+@Path("/themepark")
 @SessionScoped
 public class ThemeParkRESTService implements Serializable {
 
@@ -29,8 +31,7 @@ public class ThemeParkRESTService implements Serializable {
     @Consumes("application/json")
     @Produces("application/json")
     public ThemePark addThemePark(ThemePark themePark) {
-
-        return themeParkService.createThemePark(themePark);//TODO: hogy az adatbázisba generáltat adja vissza
+        return themeParkService.createThemePark(themePark);
     }
 
     @Path("/health")
@@ -39,14 +40,30 @@ public class ThemeParkRESTService implements Serializable {
         return "I'm okay";
     }
 
-    @Path("/{id}")
+    @Path("{id}")
     @GET
-    public ThemeParkDTO getThemeParkDTO(@PathParam(value = "id") Long id) {
-        return themeParkService.getThemeParkByIdDTO(id);
-    }
-    @Path("rendes/{id}")
-    @GET
-    public ThemePark getThemePark(@PathParam(value = "id") Long id) {
+    public ThemePark getThemePark(@PathParam(value = "id") Long id) {//TODO: ha null-t ad vissza exception!
         return themeParkService.getThemeParkById(id);
+    }
+
+    @Path("/{id}/guests")
+    @POST
+    @Consumes("application/json")
+    public Guest addUserToThemePark(@PathParam(value = "id") Long id, Guest guest) {
+        return themeParkService.addGuestToThemePark(id, guest);
+    }
+
+    @Path("/{id}/guests")
+    @GET
+    @Produces("application/json")
+    public List<Guest> getGuests(@PathParam(value = "id") Long id) {
+        return themeParkService.getGuests(id);
+    }
+
+    @Path("/{id}/guests")
+    @PUT
+    @Consumes("application/json")
+    public Guest deleteUserToThemePark(@PathParam(value = "id") Long id, Guest guest) {
+        return themeParkService.deleteGuestFromThemePark(id, guest);
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
  * @author David Kovacsvolgyi <kovacsvolgyi.david@gmail.com>
  */
 public class ThemeParkDTO {
+
     private Long id;
     private String name;
     private Address address;
@@ -18,17 +19,17 @@ public class ThemeParkDTO {
     private List<MachineDTO> machines;
 
     public ThemeParkDTO(ThemePark themePark) {
-        id=themePark.getId();
-        name=themePark.getName();
-        address=themePark.getAddress();
-        money=themePark.getMoney();
-        territory=themePark.getTerritory();
-        machines=new ArrayList<>();
-        themePark.getMachines().forEach(machine->machines.add(new MachineDTO(machine)));
+        id = themePark.getId();
+        name = themePark.getName();
+        address = themePark.getAddress();
+        money = themePark.getMoney();
+        territory = themePark.getTerritory();
+        machines = new ArrayList<>();
+        themePark.getMachines().forEach(machine -> machines.add(new MachineDTO(machine)));
     }
 
     public ThemeParkDTO() {
-    //mapping reasons
+        //mapping reasons
     }
 
     public Long getId() {
@@ -78,5 +79,5 @@ public class ThemeParkDTO {
     public void setName(String name) {
         this.name = name;
     }
-    
+
 }

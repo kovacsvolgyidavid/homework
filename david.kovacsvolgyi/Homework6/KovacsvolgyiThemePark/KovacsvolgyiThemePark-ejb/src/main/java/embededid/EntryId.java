@@ -1,7 +1,5 @@
 package embededid;
 
-import entity.Guest;
-import entity.ThemePark;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -16,12 +14,13 @@ import javax.persistence.TemporalType;
  */
 @Embeddable
 public class EntryId implements Serializable {
-    @Column(name="THEME_PARK_ID")
+
+    @Column(name = "THEME_PARK_ID")
     private Long themeParkId;
-    @Column(name="GUEST_ID")
+    @Column(name = "GUEST_ID")
     private Long guestId;
-    @Temporal(value=TemporalType.TIMESTAMP)
-    @Column(name="ENTRY_DATE")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @Column(name = "ENTRY_DATE")
     private Date date;
 
     public EntryId() {
@@ -85,5 +84,4 @@ public class EntryId implements Serializable {
         return true;
     }
 
-    
 }

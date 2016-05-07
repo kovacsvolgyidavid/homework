@@ -21,11 +21,11 @@ public class GuestBookEntry implements Serializable {
     @EmbeddedId
     private EntryId entryId;
     @MapsId("guestId")
-    @JoinColumn(name="GUEST_ID",referencedColumnName="id")
+    @JoinColumn(name = "GUEST_ID", referencedColumnName = "id")
     @ManyToOne
     Guest guest;
     @MapsId("themeParkId")
-    @JoinColumn(name="THEME_PARK_ID",referencedColumnName="id")
+    @JoinColumn(name = "THEME_PARK_ID", referencedColumnName = "id")
     @ManyToOne
     ThemePark themePark;
     private String entry;
@@ -49,7 +49,7 @@ public class GuestBookEntry implements Serializable {
     public void setThemePark(ThemePark themePark) {
         this.themePark = themePark;
     }
-    
+
     public EntryId getEntryId() {
         return entryId;
     }
@@ -102,5 +102,10 @@ public class GuestBookEntry implements Serializable {
         }
         return true;
     }
-    
+
+    @Override
+    public String toString() {
+        return "GuestBookEntry{" + "entryId=" + entryId + ", guest=" + guest + ", themePark=" + themePark + ", entry=" + entry + '}';
+    }
+
 }

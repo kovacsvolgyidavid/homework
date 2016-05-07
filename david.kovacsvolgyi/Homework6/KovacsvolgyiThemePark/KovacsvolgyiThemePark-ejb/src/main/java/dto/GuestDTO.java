@@ -10,6 +10,7 @@ import java.util.Date;
  * @author David Kovacsvolgyi <kovacsvolgyi.david@gmail.com>
  */
 public class GuestDTO {
+
     private Long id;
     private GuestState state;
     private Double money;
@@ -17,21 +18,19 @@ public class GuestDTO {
     private int age;
     private Date birthDay;
     private Boolean active;
-    private Machine machine;
 
     public GuestDTO() {
     }
 
     public GuestDTO(Guest guest) {
-        id=guest.getId();
-        state=guest.getState();
-        money=guest.getMoney();
-        enterTime=guest.getEnterTime();
-        age=guest.getAge();
-        active=guest.getActive();
-        machine=guest.getMachine();
-        birthDay=guest.getBirthDay();
-        
+        id = guest.getId();
+        state = guest.getState();
+        money = guest.getMoney();
+        enterTime = guest.getEnterTime();
+        age = guest.getAge();
+        active = guest.getActive();
+        birthDay = guest.getBirthDay();
+
     }
 
     public Long getId() {
@@ -82,14 +81,6 @@ public class GuestDTO {
         this.active = active;
     }
 
-    public Machine getMachine() {
-        return machine;
-    }
-
-    public void setMachine(Machine machine) {
-        this.machine = machine;
-    }
-
     public Date getBirthDay() {
         return birthDay;
     }
@@ -97,8 +88,5 @@ public class GuestDTO {
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
     }
-    
-    
-    
- 
+
 }

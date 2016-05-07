@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -35,9 +36,15 @@ public class EntityFacade {
     public <T> List<T> getEntities(Class<T> clazz) {
         throw new UnsupportedOperationException("Not implemented yet:(");
     }
-    public <T> List<T> getQuery(String queryString,Class<T> clazz){
-    TypedQuery query=entityManager.createNamedQuery(queryString,clazz);
-    return query.getResultList();
+
+    public <T> List<T> getQuery(String queryString, Class<T> clazz) {
+        TypedQuery query = entityManager.createNamedQuery(queryString, clazz);
+        return query.getResultList();
+    }
+
+    public Query getQuery(String queryString) {
+        Query query = entityManager.createNamedQuery(queryString);
+        return query;
     }
 
 }

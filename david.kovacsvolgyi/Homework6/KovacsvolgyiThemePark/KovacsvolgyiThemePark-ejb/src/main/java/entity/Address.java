@@ -12,6 +12,7 @@ import javax.persistence.Id;
  */
 @Entity
 public class Address implements Serializable {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -104,6 +105,10 @@ public class Address implements Serializable {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Address{" + "id=" + id + ", country=" + country + ", city=" + city + ", street=" + street + ", streetNumber=" + streetNumber + '}';
+    }
+
 }
